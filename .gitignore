@@ -29,3 +29,7 @@
 /servers*
 /patchouli_data.json
 /hmclversion.cfg
+/patchouli_books/
+/config/
+/defaultconfigs/
+/mods/
