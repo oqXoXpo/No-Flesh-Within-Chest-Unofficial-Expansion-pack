@@ -5,7 +5,7 @@
 ## 使用说明
  > 安装
 
-在此下载：
+在此下载：https://github.com/oqXoXpo/No-Flesh-Within-Chest-MoreOrgans-Expansion-pack/releases
 
 解压下载的压缩包，解压后将内部的kubejs文件夹复制到整合包版本目录下（即.minecraft\versions\No Flesh Within Chest）。
 
