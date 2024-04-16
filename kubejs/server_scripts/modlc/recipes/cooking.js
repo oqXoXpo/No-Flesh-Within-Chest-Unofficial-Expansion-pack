@@ -32,29 +32,5 @@ ServerEvents.recipes(event => {
         event.custom(recipeModel)
     }
 
-    registerCustomRecipe(new CookingRecipe(Item.of(''), [Item.of('minecraft:sugar'), Item.of('minecraft:egg')], Item.of('kubejs:cream')).setCookingtime(60 * 20))
-
-    registerCustomRecipe(new CookingRecipe(Item.of('minecraft:paper'), [Item.of('minecraft:sugar')], Item.of('kubejs:candy').withCount(4)).setCookingtime(5 * 20))
-
-    registerCustomRecipe(new CookingRecipe(Item.of('minecraft:paper'), [Item.of('minecraft:sugar'), Item.of('minecraft:ice')], Item.of('kubejs:ice_candy').withCount(4)).setCookingtime(6 * 20))
-
-    registerCustomRecipe(new CookingRecipe(Item.of('minecraft:paper'), [Item.of('minecraft:sugar'), Item.of('minecraft:clay_ball')], Item.of('kubejs:water_candy').withCount(4)).setCookingtime(6 * 20))
-
-    registerCustomRecipe(new CookingRecipe(Item.of('minecraft:paper'), [Item.of('minecraft:sugar'), Item.of('minecraft:blaze_powder')], Item.of('kubejs:fire_candy').withCount(4)).setCookingtime(6 * 20))
-
-    registerCustomRecipe(new CookingRecipe(Item.of('minecraft:paper'), [Item.of('minecraft:sugar'), Item.of('hexerei:mandrake_flowers')], Item.of('kubejs:wind_candy').withCount(4)).setCookingtime(6 * 20))
-
-    registerCustomRecipe(new CookingRecipe(Item.of('minecraft:stick'), [Item.of('extradelight:flour'), Item.of('extradelight:flour'), Item.of('extradelight:flour'), Item.of('farmersdelight:minced_beef')], Item.of('kubejs:starch_sausage').withCount(2)).setCookingtime(30 * 20))
-
-    registerCustomRecipe(new CookingRecipe(Item.of('minecraft:bowl'), [Ingredient.of('#kubejs:lung'), Ingredient.of('#kubejs:lung'), Item.of('extradelight:cooking_oil'), Item.of('extradelight:grated_ginger')], Item.of('kubejs:mr_and_mrs_smith').withCount(1)).setCookingtime(60 * 20))
-
-    registerCustomRecipe(new CookingRecipe(Item.of(''), [Item.of('extradelight:candy_cane_red_block'), Item.of('extradelight:candy_cane_green_block'), Item.of('extradelight:candy_cane_blue_block')], Item.of('kubejs:candy_canes_wand').withCount(1)).setCookingtime(60 * 20))
-
-    registerCustomRecipe(new CookingRecipe(Item.of(''), [Item.of('chestcavity:small_animal_heart'), Item.of('extradelight:breading_misanplas'), Item.of('meetyourfight:velvet_fortune'), Item.of('kubejs:chicken_flavor_powder')], Item.of('kubejs:chicken_heart')).setCookingtime(45 * 20))
     
-    registerCustomRecipe(new CookingRecipe(Item.of(''), [Item.of('chestcavity:small_animal_kidney'), Item.of('extradelight:breading_misanplas'), Item.of('meetyourfight:velvet_fortune'), Item.of('kubejs:chicken_flavor_powder')], Item.of('kubejs:chicken_kidney')).setCookingtime(45 * 20))
-
-    registerCustomRecipe(new CookingRecipe(Item.of(''), [Item.of('chestcavity:small_animal_lung'), Item.of('extradelight:breading_misanplas'), Item.of('meetyourfight:velvet_fortune'), Item.of('kubejs:chicken_flavor_powder')], Item.of('kubejs:chicken_lung')).setCookingtime(45 * 20))
-
-    registerCustomRecipe(new CookingRecipe(Item.of(''), [Item.of('chestcavity:small_animal_muscle'), Item.of('extradelight:breading_misanplas'), Item.of('meetyourfight:velvet_fortune'), Item.of('kubejs:chicken_flavor_powder')], Item.of('kubejs:chicken_strip')).setCookingtime(45 * 20))
 })

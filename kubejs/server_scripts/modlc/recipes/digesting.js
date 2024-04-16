@@ -22,5 +22,5 @@ ServerEvents.recipes(event => {
         event.custom(recipeModel)
     }
 
-    registerCustomRecipe(new DigestingRecipe(Ingredient.of('#kubejs:organ'), Item.of('minecraft:dirt')))
+    
 })
