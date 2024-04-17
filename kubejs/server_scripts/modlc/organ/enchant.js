@@ -1,8 +1,5 @@
 // priority: 9
 //优先级要小于官方
-//引用官方策略
-var Enchant1 = Object.assign(organPlayerEnchantStrategies, moorganPlayerEnchantStrategies);
-var Enchant2 = Object.assign(organPlayerEnchantOnlyStrategies, moorganPlayerEnchantOnlyStrategies);
 
 /**
  * 附魔策略
@@ -12,6 +9,8 @@ var Enchant2 = Object.assign(organPlayerEnchantOnlyStrategies, moorganPlayerEnch
 const moorganPlayerEnchantStrategies = {
     
 };
+//引用官方策略
+var Enchant1 = Object.assign(organPlayerEnchantStrategies, moorganPlayerEnchantStrategies);
 
 /**
  * 附魔唯一策略
@@ -21,3 +20,5 @@ const moorganPlayerEnchantStrategies = {
 const moorganPlayerEnchantOnlyStrategies = {
     
 };
+//引用官方策略
+var Enchant2 = Object.assign(organPlayerEnchantOnlyStrategies, moorganPlayerEnchantOnlyStrategies);

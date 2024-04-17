@@ -1,8 +1,5 @@
 // priority: 9
 //优先级要小于官方
-//引用官方策略
-var BlockBroken1 = Object.assign(organBlockBrokenStrategies, moorganBlockBrokenStrategies);
-var BlockBroken2 = Object.assign(organBlockBrokenOnlyStrategies, moorganBlockBrokenOnlyStrategies);
 
 /**
  * 器官方块破坏策略
@@ -12,6 +9,8 @@ var BlockBroken2 = Object.assign(organBlockBrokenOnlyStrategies, moorganBlockBro
 const moorganBlockBrokenStrategies = {
     
 };
+//引用官方策略
+var BlockBroken1 = Object.assign(organBlockBrokenStrategies, moorganBlockBrokenStrategies);
 
 /**
  * 器官方块破坏唯一策略
@@ -21,3 +20,5 @@ const moorganBlockBrokenStrategies = {
 const moorganBlockBrokenOnlyStrategies = {
     
 };
+//引用官方策略
+var BlockBroken2 = Object.assign(organBlockBrokenOnlyStrategies, moorganBlockBrokenOnlyStrategies);

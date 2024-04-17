@@ -19,5 +19,16 @@ StartupEvents.registry('item', event => {
     /**
      * 器官注册
      */
-    
+    registerOrgan(new Organ('modlc:sunny_dolls')
+        .addScore('buoyant', 1.5)
+        .addScore('photosynthesis', 0.5)
+        .addTextLines('default', [Text.gray({ "translate": "modlc.tooltips.sunny_dolls.1" })])
+        .addTextLines('alt', [LEADING_SYMBOL, Text.gray({ "translate": "modlc.tooltips.sunny_dolls.2" })])
+        .addTextLines('alt', [LEADING_SYMBOL, Text.gray({ "translate": "modlc.tooltips.sunny_dolls.3" })])
+        .build())
+        .texture('modlc:item/organs/weather/sunny_dolls')
+        .tag('itemborders:green')
+        .tag('kubejs:rclick_only')
+        .tag('kubejs:fantasy');
+
 });

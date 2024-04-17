@@ -1,7 +1,5 @@
 // priority: 9
 //优先级要小于官方
-//引用官方策略
-var KeyPressed1 = Object.assign(organPlayerKeyPressedOnlyStrategies, moorganPlayerKeyPressedOnlyStrategies);
 
 /**
  * 主动策略
@@ -11,3 +9,5 @@ var KeyPressed1 = Object.assign(organPlayerKeyPressedOnlyStrategies, moorganPlay
 const moorganPlayerKeyPressedOnlyStrategies = {
     
 };
+//引用官方策略
+var KeyPressed1 = Object.assign(organPlayerKeyPressedOnlyStrategies, moorganPlayerKeyPressedOnlyStrategies);

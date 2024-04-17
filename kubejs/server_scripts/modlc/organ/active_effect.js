@@ -1,8 +1,5 @@
 // priority: 9
 //优先级要小于官方
-//引用官方策略
-var Active1 = Object.assign(organActiveStrategies, moorganActiveStrategies);
-var Active2 = Object.assign(organActiveOnlyStrategies, moorganActiveStrategies);
 
 /**
  * 器官激活策略
@@ -12,6 +9,8 @@ var Active2 = Object.assign(organActiveOnlyStrategies, moorganActiveStrategies);
 const moorganActiveStrategies = {
     
 };
+//引用官方策略
+var Active1 = Object.assign(organActiveStrategies, moorganActiveStrategies);
 
 /**
  * 器官激活唯一策略
@@ -21,3 +20,5 @@ const moorganActiveStrategies = {
 const moorganActiveOnlyStrategies = {
     
 };
+//引用官方策略
+var Active2 = Object.assign(organActiveOnlyStrategies, moorganActiveStrategies);
