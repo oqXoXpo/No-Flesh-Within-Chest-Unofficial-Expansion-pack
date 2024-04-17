@@ -27,8 +27,8 @@ const moorganRightClickedOnlyStrategies = {
         } else {
             return
         }
+        event.item.shrink(1)
         player.addItemCooldown(event.item, 20 * 60)
-        event.item.shrink(1);
     },
 };
 //引用官方策略
