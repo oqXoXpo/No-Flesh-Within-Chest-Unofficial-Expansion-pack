@@ -1,10 +1,15 @@
-// priority: 10
+// priority: 9
+//优先级要小于官方
+//引用官方策略
+var Tick1 = Object.assign(organPlayerTickStrategies, moorganPlayerTickStrategies);
+var Tick2 = Object.assign(organPlayerTickOnlyStrategies, moorganPlayerTickOnlyStrategies);
+
 /**
  * 玩家Tick秒级策略
  * @constant
  * @type {Object<string,function(Internal.SimplePlayerEventJS, organ):void>}
  */
-const organPlayerTickStrategies = {
+const moorganPlayerTickStrategies = {
     
 };
 
@@ -13,6 +18,6 @@ const organPlayerTickStrategies = {
  * @constant
  * @type {Object<string,function(Internal.SimplePlayerEventJS, organ):void>}
  */
-const organPlayerTickOnlyStrategies = {
+const moorganPlayerTickOnlyStrategies = {
     
 };
