@@ -31,4 +31,20 @@ StartupEvents.registry('item', event => {
         .tag('kubejs:rclick_only')
         .tag('kubejs:fantasy');
 
+    registerOrgan(new Organ('modlc:mechanical_core')
+        .addScore('health', 1.5)
+        .addScore('iron_repair', 1)
+        .addScore('strength', -2)
+        .addScore('speed', -1)
+        .build())
+        .texture('modlc:item/organs/machine/mechanical_core')
+        .maxDamage(10000)
+        .tag('kubejs:heart')
+        .tag('itemborders:iron')
+        .tag('kubejs:key_pressed')
+        .tag('kubejs:machine')
+        .tag('kubejs:revolution')
+        .tag('kubejs:legends');
+	
+
 });
