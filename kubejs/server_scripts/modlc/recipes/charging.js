@@ -20,6 +20,6 @@ ServerEvents.recipes(event => {
         event.custom(recipeModel)
     }
 
-    registerCustomRecipe(new ChargingRecipe(Item.of('modlc:mechanical_core'), Item.of('modlc:mechanical_core')).setEnergy(1000000).maxChargeRate(50000))
+    registerCustomRecipe(new ChargingRecipe(Item.of('modlc:engine'), Item.of('modlc:engine')).setEnergy(1000000).maxChargeRate(50000))
 
 })

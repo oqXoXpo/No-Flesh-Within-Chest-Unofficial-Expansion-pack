@@ -38,7 +38,6 @@ StartupEvents.registry('item', event => {
         .addScore('speed', -1)
         .build())
         .texture('modlc:item/organs/machine/mechanical_core')
-        .maxDamage(10000)
         .tag('kubejs:heart')
         .tag('itemborders:iron')
         .tag('kubejs:key_pressed')
