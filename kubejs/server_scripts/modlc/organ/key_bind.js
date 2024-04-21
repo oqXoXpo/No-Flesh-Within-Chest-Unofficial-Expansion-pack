@@ -9,18 +9,19 @@
 const moorganPlayerKeyPressedOnlyStrategies = {
     'modlc:mechanical_core': function (event, organ) {
         let player = event.player
-        let itemarray = [player.getMainHandItem(), player.getOffHandItem()]
-        let position = itemarray.indexOf('modlc:engine')
-        if (position < 0) return
-        let item = itemarray[position]
-        let damage = item.getDamageValue()
-        if (damage == item.getMaxDamage()) {
+        let main = player.mainHandItem
+        let off = player.offHandItem
+        if (main != 'modlc:engine' && off != 'modlc:engine') return
+        let handItem = main == 'modlc:engine' ? 'main_hand' : 'off_hand'
+        let damage = player.getHeldItem(handItem).getDamageValue()
+        let maxDamage = player.getHeldItem(handItem).getMaxDamage()
+        if (damage >= maxDamage) {
             return player.setStatusMessage([Text.gold({ "translate": "modlc.msg.mechanical_core.1" })])
         }
         let itemMap = getPlayerChestCavityItemMap(player)
         let lossDamage = itemMap.get('modlc:mechanical_core').length * 1
         player.setStatusMessage([Text.gold({ "translate": "modlc.msg.mechanical_core.2" })])
-        item.setDamageValue(damage += lossDamage)
+        player.damageHeldItem(handItem, lossDamage)
         player.addItemCooldown('modlc:mechanical_core', 20 * 15)
     },
 };
