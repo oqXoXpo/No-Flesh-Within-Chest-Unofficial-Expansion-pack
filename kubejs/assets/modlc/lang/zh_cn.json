@@ -3,8 +3,11 @@
     
     "item.modlc.engine": "发动机",
 
-    "item.modlc.sunny_dolls": "晴天娃娃",
     "item.modlc.mechanical_core": "机械核心",
+    "item.modlc.sunny_dolls": "晴天娃娃",
+
+    "modlc.msg.mechanical_core.1" : "发动机§7需要§c充电",
+    "modlc.msg.mechanical_core.2" : "机械核心§7正在§c运行",
 
     "modlc.tooltips.sunny_dolls.1": "象征着§b晴天§7和§9雨天§7的娃娃",
     "modlc.tooltips.sunny_dolls.2": "手持§e向日葵§7右键，把天气变成§b晴天",

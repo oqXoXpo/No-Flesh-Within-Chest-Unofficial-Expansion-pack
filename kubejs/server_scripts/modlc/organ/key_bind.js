@@ -11,15 +11,16 @@ const moorganPlayerKeyPressedOnlyStrategies = {
         let player = event.player
         let itemarray = [player.getMainHandItem(), player.getOffHandItem()]
         let position = itemarray.indexOf('modlc:engine')
+        if (position < 0) return
         let item = itemarray[position]
         let damage = item.getDamageValue()
-        if (position < 0) return
         if (damage == item.getMaxDamage()) {
-            return player.setStatusMessage([Text.gold('发动机'), '需要', Text.red('充电')])
+            return player.setStatusMessage([Text.gold({ "translate": "modlc.msg.mechanical_core.1" })])
         }
-
-
-        item.setDamageValue(damage += 1)
+        let itemMap = getPlayerChestCavityItemMap(player)
+        let lossDamage = itemMap.get('modlc:mechanical_core').length * 1
+        player.setStatusMessage([Text.gold({ "translate": "modlc.msg.mechanical_core.2" })])
+        item.setDamageValue(damage += lossDamage)
         player.addItemCooldown('modlc:mechanical_core', 20 * 15)
     },
 };
