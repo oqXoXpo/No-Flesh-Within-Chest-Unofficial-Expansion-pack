@@ -1,37 +1,8 @@
-function GoetyRitualRecipe(craftType, ingredients, activation_item, output) {
-    this.type = 'goety:ritual'
-    this.ritual_type = 'goety:craft'
-    this.craftType = craftType
-    this.activation_item = activation_item
-    this.ingredients = ingredients
-    this.result = output
-    this.duration = 60
-    this.soulCost = 100
-}
-
-GoetyRitualRecipe.prototype = {
-    setDuration: function (duration) {
-        this.duration = duration
-        return this
-    },
-    setSoulCost: function (soulCost) {
-        this.soulCost = soulCost
-        return this
-    },
-    setRitualType: function (ritual_type) {
-        this.ritual_type = ritual_type
-        return this
-    },
-    setEntityToSacrifice: function (entity_to_sacrifice) {
-        this.entity_to_sacrifice = entity_to_sacrifice
-        return this
-    },
-}
-
 ServerEvents.recipes(event => {
     function registerCustomRecipe(recipeModel) {
         event.custom(recipeModel)
     }
 
+    registerCustomRecipe(new GoetyRitualRecipe('sky', [Ingredient.of('irons_spellbooks:magic_cloth'), Ingredient.of('irons_spellbooks:magic_cloth'), Ingredient.of('minecraft:string'), Ingredient.of('irons_spellbooks:magic_cloth')], Item.of('minecraft:sunflower'), Item.of('modlc:sunny_dolls')).setSoulCost(1000))
     
 })
