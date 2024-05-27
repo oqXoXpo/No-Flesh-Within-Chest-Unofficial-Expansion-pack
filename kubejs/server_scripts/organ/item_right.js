@@ -2,13 +2,7 @@
 ItemEvents.rightClicked(event => {
     let player = event.player;
     if (!player) return;
-
     let typeMap = getPlayerChestCavityTypeMap(player);
-    if (typeMap.has('kubejs:rclick')) {
-        typeMap.get('kubejs:rclick').forEach(organ => {
-            organRightClickedStrategies[organ.id](event, organ)
-        })
-    }
     let onlySet = new Set()
     if (typeMap.has('kubejs:rclick_only')) {
         typeMap.get('kubejs:rclick_only').forEach(organ => {
@@ -18,6 +12,12 @@ ItemEvents.rightClicked(event => {
             }
         })
     }
+    if (typeMap.has('kubejs:rclick')) {
+        typeMap.get('kubejs:rclick').forEach(organ => {
+            organRightClickedStrategies[organ.id](event, organ)
+        })
+    }
+
 })
 
 /**
@@ -36,10 +36,11 @@ const organRightClickedStrategies = {
  */
 const organRightClickedOnlyStrategies = {
     'kubejs:furnace_core': function (event, organ) {
-        if (!event.item.hasTag('minecraft:coals')) {
+        let itemMap = getPlayerChestCavityItemMap(event.player)
+        let pressurizable = itemMap.has('kubejs:blaze_pressurizer') && event.item.id == 'art_of_forging:potent_mixture'
+        if (!event.item.hasTag('minecraft:coals') && !pressurizable) {
             return
         }
-        let itemMap = getPlayerChestCavityItemMap(event.player)
         let amplifier = 0
         let duration = 20 * 20
         if (itemMap.has('kubejs:revolution_gear')) {
@@ -47,6 +48,9 @@ const organRightClickedOnlyStrategies = {
         }
         if (itemMap.has('kubejs:revolution_relay')) {
             duration = duration + itemMap.get('kubejs:revolution_relay').length * 100
+        }
+        if (pressurizable) {
+            amplifier = amplifier + 2
         }
         if (itemMap.has('kubejs:revolution_delay')) {
             duration = Math.max(duration - itemMap.get('kubejs:revolution_delay').length * 40, 20 * 8)
@@ -57,10 +61,11 @@ const organRightClickedOnlyStrategies = {
         event.item.shrink(1);
     },
     'kubejs:burning_heart': function (event, organ) {
-        if (!event.item.hasTag('minecraft:coals')) {
+        let itemMap = getPlayerChestCavityItemMap(event.player)
+        let pressurizable = itemMap.has('kubejs:blaze_pressurizer') && event.item.id == 'art_of_forging:potent_mixture'
+        if (!event.item.hasTag('minecraft:coals') && !pressurizable) {
             return
         }
-        let itemMap = getPlayerChestCavityItemMap(event.player)
         let amplifier = 0
         let duration = 20 * 20
         if (itemMap.has('kubejs:revolution_gear')) {
@@ -68,6 +73,9 @@ const organRightClickedOnlyStrategies = {
         }
         if (itemMap.has('kubejs:revolution_relay')) {
             duration = duration + itemMap.get('kubejs:revolution_relay').length * 100
+        }
+        if (pressurizable) {
+            amplifier = amplifier + 2
         }
         if (itemMap.has('kubejs:revolution_delay')) {
             duration = Math.max(duration - itemMap.get('kubejs:revolution_delay').length * 60, 20 * 8)
@@ -96,21 +104,8 @@ const organRightClickedOnlyStrategies = {
         if (event.item != Item.of('minecraft:potion', '{Potion:"minecraft:water"}')) {
             return
         }
+        revolSteamEngine(player)
         player.addItemCooldown(event.item, 20 * 20)
-        let count = player.persistentData.getInt(resourceCount)
-        if (player.hasEffect('kubejs:burning_heart')) {
-            let effect = player.getEffect('kubejs:burning_heart')
-            player.removeEffect('kubejs:burning_heart')
-            player.potionEffects.add('kubejs:flaring_heart', effect.getDuration() + 20 * 5, effect.getAmplifier(), false, false)
-            updateResourceCount(player, count + (effect.getAmplifier() + 1) * 50)
-        } else if (player.hasEffect('kubejs:flaring_heart')) {
-            let effect = player.getEffect('kubejs:flaring_heart')
-            player.removeEffect('kubejs:flaring_heart')
-            player.potionEffects.add('kubejs:burning_heart', effect.getDuration() + 20 * 5, effect.getAmplifier(), false, false)
-            updateResourceCount(player, count + (effect.getAmplifier() + 1) * 50)
-        } else {
-            updateResourceCount(player, count + 25)
-        }
         event.item.shrink(1)
         event.player.give(Item.of('minecraft:glass_bottle'))
     },

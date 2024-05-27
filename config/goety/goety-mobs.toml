@@ -28,6 +28,8 @@
 			mossySkeletonServantTexture = true
 			#If Sunken Skeleton Servants have custom textures, Default: true
 			sunkenSkeletonServantTexture = true
+			#If Necromancer Servants have custom textures, Default: true
+			necromancerServantTexture = true
 
 		[Textures."Summoned Mobs"."Wraith Servants"]
 			#If Wraith Servants have custom textures, Default: true
@@ -42,7 +44,7 @@
 			vexTexture = true
 
 		[Textures."Summoned Mobs"."Redstone Golem"]
-			#If Redstone Golems show cracks when damaged sufficiently, Default: false
+			#If Redstone Golems show cracks when damaged sufficiently, Default: true
 			redstoneGolemCrack = false
 
 		[Textures."Summoned Mobs"."Slime Servants"]
@@ -78,8 +80,12 @@
 	#Range: > 0
 	ravagerRoarCooldown = 10
 	#Maximum size Slime and Magma Cube Servants can obtain through Slime/Magma Block, Default: 4
-	#Range: > 1
+	#Range: 1 ~ 127
 	maxSlimeSize = 4
+	#Whether creating a Redstone Monstrosity causes the mold to change blocks, Default: true
+	redstoneMonstrosityMold = true
+	#Whether Redstone Monstrosity breaks leaves if mob griefing is enabled, Default: true
+	redstoneMonstrosityLeafBreak = true
 
 	[Servants."Undead Servants"]
 		#Whether Undead Servants can teleport to Players, Default: false
@@ -135,10 +141,10 @@
 		illagerAssault = true
 		#How many ticks it takes for Illager Assaults to spawn, Default: 12000
 		#Range: > 0
-		illagerAssaultSpawnFreq = 12000
+		illagerAssaultSpawnFreq = 24000
 		#Spawn Chance for Illagers Hunting the Player every Spawn Frequency, the lower the more likelier, Default: 5
 		#Range: > 0
-		illagerAssaultSpawnChance = 5
+		illagerAssaultSpawnChance = 10
 		#How much Soul Energy the Player has is required for Special Illagers to spawn, Default: 2500
 		#Range: > 0
 		illagerAssaultThreshold = 2500

@@ -12,12 +12,13 @@
 
 /**
  * 甜蜜之梦承伤事件
- * @param {Internal.LivingHurtEvent} event 
+ * @param {Internal.LivingDamageEvent} event 
  * @param {EntityHurtCustomModel} data 
  * @returns 
  */
 function sweetDreamPlayerHurtByOthers(event, data) {
-    let /** @type {Internal.Player} */ player = event.entity;
+    /** @type {Internal.ServerPlayer} */
+    let player = event.entity
     if (player.hasEffect('kubejs:sweet_dream')) {
         let itemMap = getPlayerChestCavityItemMap(player);
         if (!itemMap.has('kubejs:candy_heart')) {
@@ -42,14 +43,14 @@ function sweetDreamPlayerHurtByOthers(event, data) {
         return;
     }
 
-    if (event.amount >= 10 && !player.hasEffect('kubejs:sweet_dream')) {
+    if (event.amount >= 5 && !player.hasEffect('kubejs:sweet_dream')) {
         let itemMap = getPlayerChestCavityItemMap(player);
         if (!itemMap.has('kubejs:magic_hippocampus') || player.cooldowns.isOnCooldown(Item.of('kubejs:magic_hippocampus'))) {
             return;
         }
         let durationMulti = 1;
         let amplifierMulti = 0;
-        player.cooldowns.addCooldown(Item.of('kubejs:magic_hippocampus'), 100)
+        player.cooldowns.addCooldown(Item.of('kubejs:magic_hippocampus'), 60)
         if (itemMap.has('kubejs:magic_muscle')) {
             durationMulti = durationMulti + itemMap.get('kubejs:magic_muscle').length
         }

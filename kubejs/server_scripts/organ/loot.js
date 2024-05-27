@@ -10,13 +10,6 @@ LootJS.modifiers(event => {
             }
             let player = event.killerEntity
             let typeMap = getLootPlayerTypeMap(player)
-            if (typeMap.has('kubejs:loot_entity')) {
-                typeMap.get('kubejs:loot_entity').forEach(organ => {
-                    if (entityLootStrategies[organ.id]) {
-                        entityLootStrategies[organ.id](event, organ)
-                    }
-                })
-            }
             let lootOrganSet = new Set()
             if (typeMap.has('kubejs:loot_entity_only')) {
                 typeMap.get('kubejs:loot_entity_only').forEach(organ => {
@@ -28,6 +21,13 @@ LootJS.modifiers(event => {
                     }
                 })
             }
+            if (typeMap.has('kubejs:loot_entity')) {
+                typeMap.get('kubejs:loot_entity').forEach(organ => {
+                    if (entityLootStrategies[organ.id]) {
+                        entityLootStrategies[organ.id](event, organ)
+                    }
+                })
+            }
         });
 
     event.addLootTypeModifier(LootType.CHEST)
@@ -35,13 +35,6 @@ LootJS.modifiers(event => {
             let player = event.player
             if (!player) { return }
             let typeMap = getLootPlayerTypeMap(player)
-            if (typeMap.has('kubejs:loot_chest')) {
-                typeMap.get('kubejs:loot_chest').forEach(organ => {
-                    if (chestLootStrategies[organ.id]) {
-                        chestLootStrategies[organ.id](event, organ)
-                    }
-                })
-            }
             let lootOrganSet = new Set()
             if (typeMap.has('kubejs:loot_chest_only')) {
                 typeMap.get('kubejs:loot_chest_only').forEach(organ => {
@@ -53,12 +46,19 @@ LootJS.modifiers(event => {
                     }
                 })
             }
+            if (typeMap.has('kubejs:loot_chest')) {
+                typeMap.get('kubejs:loot_chest').forEach(organ => {
+                    if (chestLootStrategies[organ.id]) {
+                        chestLootStrategies[organ.id](event, organ)
+                    }
+                })
+            }
         });
 })
 
 /**
  * 获取玩家器官类型表
- * @param {Internal.Player} player 
+ * @param {Internal.ServerPlayer} player 
  * @returns {Map}
  */
 
@@ -67,7 +67,7 @@ function getLootPlayerTypeMap(player) {
     if (playerChestCavityTypeMap.has(uuid)) {
         return playerChestCavityTypeMap.get(uuid);
     }
-    initChestCavityIntoMap(player)
+    initChestCavityIntoMap(player, true)
     return playerChestCavityTypeMap.get(uuid) ?? new Map();
 }
 
@@ -133,14 +133,14 @@ const chestLootOnlyStrategies = {
         event.removeLoot(ItemFilter.ALWAYS_TRUE)
     },
     'kubejs:d8': function (event, organ) {
-        if (Math.random() < 0.3) {
+        if (Math.random() > 0.8) {
             return
         }
         let player = event.player
         let item = Item.of('kubejs:random_tumor', { organData: {} })
         let amount = Math.floor(Math.random() * 4 + 1)
         for (let i = 0; i < amount; i++) {
-            let attri = randomGet(tumorAttriBute)
+            let attri = randomGet(tumorAttriButeByD8)
             let attriName = attri.name
             // 扩散系数，用于控制属性的扩散范围(-1, 1)
             let diffusivity = Math.random() + Math.random() - 1

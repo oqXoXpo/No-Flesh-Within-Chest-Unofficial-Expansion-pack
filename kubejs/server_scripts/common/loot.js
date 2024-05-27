@@ -21,15 +21,15 @@ LootJS.modifiers(event => {
                 LootEntry.of('lightmanscurrency:coin_diamond').when((c) => c.randomChance(0.05)),
             )
             .apply(ctx => {
-                let player = ctx.player
-                if (!player) return
-                let diffStage = player.stages.getAll().toArray().find(ele => ele.startsWith('difficult_level_'))
-                if (!diffStage) return
-                let diffLevelNum = diffStage.match('difficult_level_(\\d+)')[1]
+                let entity = ctx.entity
+                let diffLevelNum = 1
+                if (entity.persistentData.contains('diffLevel')) {
+                    diffLevelNum = entity.persistentData.getInt('diffLevel')
+                }
                 if (diffLevelNum >= 4) {
-                    ctx.addLoot(LootEntry.of('kubejs:dark_stardust_fragment').when((c) => c.randomChance(Math.min((diffLevelNum - 2) * 0.05, 1))))
-                    ctx.addLoot(LootEntry.of('kubejs:unbreakable_core').when((c) => c.randomChance(Math.min((diffLevelNum - 2) * 0.02, 1))))
-                    ctx.addLoot(LootEntry.of('kubejs:disenchantment_book').when((c) => c.randomChance(Math.min((diffLevelNum - 2) * 0.02, 1))))
+                    ctx.addLoot(LootEntry.of('kubejs:dark_stardust_fragment').when((c) => c.randomChance(Math.min(0.4, 1))))
+                    ctx.addLoot(LootEntry.of('kubejs:unbreakable_core').when((c) => c.randomChance(Math.min(0.05, 1))))
+                    ctx.addLoot(LootEntry.of('kubejs:disenchantment_book').when((c) => c.randomChance(Math.min(0.15, 1))))
                 }
             })
     }
@@ -67,6 +67,9 @@ LootJS.modifiers(event => {
 
     event.addEntityLootModifier('minecraft:witch')
         .addLoot(LootEntry.of('kubejs:magic_spine').when((c) => c.randomChance(0.05)));
+
+    event.addEntityLootModifier('minecraft:rabbit')
+        .addLoot(LootEntry.of('kubejs:is_rabbit').when((c) => c.randomChance(0.02)));
 
     event.addEntityLootModifier(["biomancy:flesh_blob", "biomancy:hungry_flesh_blob", "biomancy:primordial_hungry_flesh_blob", "biomancy:primordial_flesh_blob", "biomancy:legacy_flesh_blob"])
         .apply(ctx => {
@@ -122,6 +125,11 @@ LootJS.modifiers(event => {
         .addLoot(LootEntry.of('kubejs:artist_wand').when((c) => c.randomChance(0.1)))
 
     event.addLootTypeModifier(LootType.CHEST)
+        .anyStructure(['#tetra:forged_ruins'], false)
+        .addWeightedLoot(machineChestLootTable)
+        .addWeightedLoot(machineChestLootTable)
+
+    event.addLootTypeModifier(LootType.CHEST)
         .removeLoot('@nameless_trinkets')
         .anyStructure(['#minecraft:village'], false)
         .addLoot(LootEntry.of('biomancy:healing_additive').when((c) => c.randomChance(0.25)))
@@ -156,10 +164,11 @@ LootJS.modifiers(event => {
 
     event.addLootTypeModifier(LootType.CHEST)
         .anyDimension(['minecraft:the_nether'])
-        .addLoot(LootEntry.of('kubejs:the_third_eye').when((c) => c.randomChance(0.005)))
-        .addLoot(LootEntry.of('kubejs:redstone_furnace').when((c) => c.randomChance(0.01)))
         .addLoot(LootEntry.of('kubejs:ritual_catalyst').when((c) => c.randomChance(0.1)))
         .addLoot(LootEntry.of('kubejs:infinity_beats').when((c) => c.randomChance(0.005)))
+        .addLoot(LootEntry.of('kubejs:redstone_furnace').when((c) => c.randomChance(0.01)))
+        .addLoot(LootEntry.of('kubejs:the_third_eye').when((c) => c.randomChance(0.003)))
+        .addLoot(LootEntry.of('kubejs:blaze_pressurizer').when((c) => c.randomChance(0.005)))
 
     event.addLootTypeModifier(LootType.FISHING)
         .apply(ctx => {
@@ -168,9 +177,9 @@ LootJS.modifiers(event => {
             if (player.stages.has('flos_magic_stage_2') && ctx.level.isRaining() &&
                 ctx.level.isNight() && Math.random() < 0.5) {
                 ctx.server.scheduleInTicks(20 * 1, (callback) => {
-                    ctx.level.runCommandSilent('/weather clear');
-                    ctx.player.stages.remove('flos_magic_stage_2')
-                    ctx.player.stages.add('flos_magic_stage_3')
+                    ctx.level.runCommandSilent('/weather clear')
+                    player.stages.remove('flos_magic_stage_2')
+                    player.stages.add('flos_magic_stage_3')
                 })
                 return
             }

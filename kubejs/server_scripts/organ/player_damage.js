@@ -8,11 +8,6 @@
 function organEntityHurtByPlayer(event, data) {
     let player = event.source.player;
     let typeMap = getPlayerChestCavityTypeMap(player);
-    if (typeMap.has('kubejs:damage')) {
-        typeMap.get('kubejs:damage').forEach(organ => {
-            organPlayerDamageStrategies[organ.id](event, organ, data)
-        })
-    }
     let onlySet = new Set()
     if (typeMap.has('kubejs:damage_only')) {
         typeMap.get('kubejs:damage_only').forEach(organ => {
@@ -22,7 +17,11 @@ function organEntityHurtByPlayer(event, data) {
             }
         })
     }
-
+    if (typeMap.has('kubejs:damage')) {
+        typeMap.get('kubejs:damage').forEach(organ => {
+            organPlayerDamageStrategies[organ.id](event, organ, data)
+        })
+    }
 }
 
 /**
@@ -43,9 +42,8 @@ const organPlayerDamageStrategies = {
 const organPlayerDamageOnlyStrategies = {
     'kubejs:infinity_beats': function (event, organ, data) {
         let player = event.source.player;
-        let attriMap = getPlayerAttributeMap(player);
-        let itemMap = getPlayerChestCavityItemMap(player);
-        if (itemMap.has('kubejs:infinity_beats') && !player.hasItemInSlot('mainhand') && !player.hasItemInSlot('offhand')) {
+        let attriMap = getPlayerAttributeMap(player)
+        if (!player.hasItemInSlot('mainhand') && !player.hasItemInSlot('offhand')) {
             let value = 4;
             if (attriMap.has(global.TEMP_ATTACK_UP.name)) {
                 value = value + attriMap.get(global.TEMP_ATTACK_UP.name)
@@ -53,20 +51,7 @@ const organPlayerDamageOnlyStrategies = {
             attriMap.set(global.TEMP_ATTACK_UP.name, value)
             player.modifyAttribute(global.TEMP_ATTACK_UP.key, global.TEMP_ATTACK_UP.name, value, global.TEMP_ATTACK_UP.operation);
             setPlayerAttributeMap(player, attriMap);
-
-            if (!player.hasEffect('kubejs:dragon_power')) {
-                data.returnDamage = data.returnDamage + value
-            }
-            else {
-                let dragonPowerEffect = player.getEffect('kubejs:dragon_power')
-                let amplify = dragonPowerEffect.getAmplifier()
-                if (amplify < 5) {
-                    data.returnDamage = (data.returnDamage + value) * (0.8 - amplify * 0.2)
-                } else {
-                    data.returnDamage = (data.returnDamage + value) * 0
-                }
-            }
-
+            data.returnDamage = data.returnDamage + value
         } else {
             player.removeAttribute(global.TEMP_ATTACK_UP.key, global.TEMP_ATTACK_UP.name);
             attriMap.set(global.TEMP_ATTACK_UP.name, 0);
@@ -193,7 +178,7 @@ const organPlayerDamageOnlyStrategies = {
     'kubejs:lava_life_cycle_system': function (event, organ, data) {
         let player = event.source.player
         let count = player.persistentData.getInt(resourceCount)
-        let damageBonus = Math.floor(count / 5)
+        let damageBonus = Math.floor(count / 10)
         if (damageBonus > 0) {
             event.amount = event.amount + damageBonus
             updateResourceCount(player, count - damageBonus)
@@ -207,9 +192,10 @@ const organPlayerDamageOnlyStrategies = {
     },
     'kubejs:the_third_eye': function (event, organ, data) {
         if (event.source.type != 'arrow') return
-        if (player.persistentData.getInt(warpCount) > 20) {
-            event.entity.invulnerableTime = event.entity.invulnerableTime * 1 / 2
-            event.amount = event.amount * 0.5
+        let player = event.source.player
+        if (player.persistentData.getInt(warpCount) >= 20) {
+            event.entity.invulnerableTime = 0
+            event.amount = event.amount * 0.75
         }
     },
     'kubejs:energy_bottle_max': function (event, organ, data) {
@@ -243,32 +229,30 @@ const organPlayerDamageOnlyStrategies = {
     'kubejs:origin_knight_core': function (event, organ, data) {
         let player = event.source.player
         if (player.absorptionAmount > 0) {
-            event.amount = event.amount * (1 + player.absorptionAmount * 0.01)
+            event.amount = event.amount + player.absorptionAmount
         }
     },
     'kubejs:mockery': function (event, organ, data) {
         let player = event.source.player
-        let luckval = player.getLuck()
-        if (luckval <= 0) return
-        let randomval = Math.random() * Math.min(1 + luckval / 50, 3)
-        event.amount = event.amount * randomval
+        let luck = player.getLuck()
+        if (luck <= 0) luck = 0
+        let random = Math.random() * Math.min(1 + luck / 50, 3)
+        event.amount = event.amount * random
     },
     'kubejs:melty_blood': function (event, organ, data) {
         let player = event.source.player
-        let luckval = player.getLuck()
-        if (luckval <= 0) return
-        if (Math.random() > Math.min(luckval * 0.005, 0.25)) return
-        event.amount = event.amount * (1 + Math.min(luckval * 0.06, 3))
-        //未实现某段时间内攻速降低逻辑，改为buff实现
-        //player.modifyAttribute('minecraft:generic.attack_speed', 'TempAttackSpeedDown', -(0.3 + luckval * 0.01), 'multiply_base')
-        player.potionEffects.add('goety:stunned', 20 * Math.min(luckval * 0.1, 5), 0)
+        let luck = player.getLuck()
+        if (luck <= 0) return
+        if (Math.random() > Math.min(luck * 0.005, 0.25)) return
+        event.amount = event.amount * (1 + Math.min(luck * 0.06, 3))
+        player.potionEffects.add('goety:stunned', 20, 0)
     },
     'kubejs:mace': function (event, organ, data) {
         let player = event.source.player
-        let fallval = player.fallDistance
-        if (fallval <= 0) return
-        let falldamagemulti = Math.min(1 + fallval * fallval * 0.0001, 5)
-        event.amount = event.amount * falldamagemulti
+        let fallDist = player.fallDistance
+        if (fallDist <= 0) return
+        let fallDamageMulti = Math.min(1 + fallDist * 0.1, 5)
+        event.amount = event.amount * fallDamageMulti
     },
     'kubejs:sunbird_crystals': function (event, organ, data) {
         let entity = event.entity
@@ -282,7 +266,7 @@ const organPlayerDamageOnlyStrategies = {
         if (!isPlayerOnFire(player)) {
             return
         }
-        event.amount = event.amount + player.maxHealth - player.health
+        event.amount = event.amount + (player.maxHealth - player.health) * 2
     },
     'kubejs:tusk': function (event, organ, data) {
         let player = event.source.player
@@ -290,27 +274,31 @@ const organPlayerDamageOnlyStrategies = {
         if (player.hasItemInSlot('mainhand') || player.hasItemInSlot('offhand')) return
         let criticalPunchCount = player.persistentData.getInt(criticalPunch)
         // 概率增加重拳计数器
-        if (Math.random() < 0.2) {
-            criticalPunchCount = criticalPunchCount + 1
-        }
-        // 结算
+        criticalPunchCount = criticalPunchCount + 1
+
         if (criticalPunchCount >= criticalPunchMaxCount) {
             let amplifier = 1.5 + (criticalPunchCount - criticalPunchMaxCount) * 0.05
             event.amount = event.amount * amplifier
             criticalPunchCount = 0
             player.level.playSound(null, player.getX(), player.getY(), player.getZ(), 'block.amethyst_block.break', player.getSoundSource(), 0.5, Math.max(amplifier * 0.2 + 0.1, 5))
-            player.setStatusMessage(`你打出了一记§4重拳§7`);
         }
         player.persistentData.putInt(criticalPunch, criticalPunchCount)
     },
     'kubejs:soul_vulture_feather': function (event, organ, data) {
         let target = event.entity
         let harmEffectNum = 0
-        target.activeEffects.forEach(ele => {
-            if (!ele.effect.isBeneficial()) {
+        target.potionEffects.active.forEach(ele => {
+            if (ele.effect.CC_IsHarmful()) {
                 harmEffectNum = harmEffectNum + 1
             }
         })
-        event.amount = event.amount * (1 + effectNum * 0.1)
+        event.amount = event.amount * (1 + harmEffectNum * 0.1)
+    },
+    'kubejs:golden_lucky_cookie_organ': function (event, organ, data) {
+        let target = event.entity
+        if (!target.isPlayer()) return
+        let player = event.source.player
+        let amplifier = Math.floor(player.getLuck() * 0.2) - 1
+        target.potionEffects.add('minecraft:luck', 20 * 120, Math.max(amplifier, 0))
     },
 };

@@ -1,4 +1,14 @@
 ServerEvents.recipes(event => {
+	function registerCustomRecipe(recipeModel) {
+        event.custom(recipeModel)
+    }
+	function RollingRecipe(input, output) {
+		this.type = 'createaddition:rolling'
+		this.input = input
+		this.result = output
+	}
+
+
 	event.recipes.create.mixing(Fluid.of('kubejs:syrup').withAmount(50), [Fluid.water(50), 'minecraft:sugar', 'hexerei:dried_mugwort_flowers', 'hexerei:dried_belladonna_flowers']).heated()
 
 	event.recipes.create.filling('kubejs:hamimelon_organ', ['fruitsdelight:hamimelon', Fluid.of('kubejs:syrup').withAmount(1000)])
@@ -134,15 +144,22 @@ ServerEvents.recipes(event => {
 		E: 'create:brass_nugget'
 	})
 
-	event.recipes.create.sequenced_assembly([
-		Item.of('kubejs:candy_heart')
-	], 'kubejs:heart_template', [
-		event.recipes.createDeploying('kubejs:incomplete_heart_template', ['kubejs:incomplete_heart_template', 'irons_spellbooks:arcane_essence']),
-		event.recipes.createCutting('kubejs:incomplete_heart_template', 'kubejs:incomplete_heart_template'),
-		event.recipes.createDeploying('kubejs:incomplete_heart_template', ['kubejs:incomplete_heart_template', 'biomancy:living_flesh']),
-		event.recipes.createDeploying('kubejs:incomplete_heart_template', ['kubejs:incomplete_heart_template', '#forge:dyes/pink']),
-		event.recipes.create.filling('kubejs:incomplete_heart_template', ['kubejs:incomplete_heart_template', Fluid.of('kubejs:syrup').withAmount(500)])
-	]).transitionalItem('kubejs:incomplete_heart_template').loops(5)
+	event.recipes.create.mechanical_crafting('kubejs:revolution_bell', [
+		' AAA ',
+		'ACBCA',
+		'ABEBA',
+		'ACDCA',
+		' ADA ',
+		'  D  ',
+		'  F  ',
+	], {
+		A: '#forge:plates/brass',
+		B: '#createaddition:spools',
+		C: '#forge:rods/brass',
+		D: 'create:minecart_coupling',
+		E: 'create:clockwork_bearing',
+		F: '#minecraft:anvil'
+	})
 
 	event.recipes.create.sequenced_assembly([
 		Item.of('kubejs:revolution_relay')
@@ -169,6 +186,16 @@ ServerEvents.recipes(event => {
 		event.recipes.createDeploying('kubejs:incomplete_stomach_template', ['kubejs:incomplete_stomach_template', '#forge:dyes/pink']),
 		event.recipes.create.filling('kubejs:incomplete_stomach_template', ['kubejs:incomplete_stomach_template', Fluid.of('kubejs:syrup').withAmount(500)])
 	]).transitionalItem('kubejs:incomplete_stomach_template').loops(5)
+
+	event.recipes.create.sequenced_assembly([
+		Item.of('kubejs:candy_heart')
+	], 'kubejs:heart_template', [
+		event.recipes.createDeploying('kubejs:incomplete_heart_template', ['kubejs:incomplete_heart_template', 'irons_spellbooks:arcane_essence']),
+		event.recipes.createCutting('kubejs:incomplete_heart_template', 'kubejs:incomplete_heart_template'),
+		event.recipes.createDeploying('kubejs:incomplete_heart_template', ['kubejs:incomplete_heart_template', 'biomancy:living_flesh']),
+		event.recipes.createDeploying('kubejs:incomplete_heart_template', ['kubejs:incomplete_heart_template', '#forge:dyes/pink']),
+		event.recipes.create.filling('kubejs:incomplete_heart_template', ['kubejs:incomplete_heart_template', Fluid.of('kubejs:syrup').withAmount(500)])
+	]).transitionalItem('kubejs:incomplete_heart_template').loops(5)
 
 	event.recipes.create.sequenced_assembly([
 		Item.of('kubejs:burning_heart')
@@ -211,11 +238,11 @@ ServerEvents.recipes(event => {
 		event.recipes.createDeploying('kubejs:incomplete_glass_wand', ['kubejs:incomplete_glass_wand', 'biomancy:corrosive_additive'])
 	]).transitionalItem('kubejs:incomplete_glass_wand').loops(6)
 
-	event.recipes.create.crushing([Item.of('3x minecraft:raw_iron'), Item.of('2x minecraft:raw_gold').withChance(0.2), Item.of('2x minecraft:raw_copper').withChance(0.2), Item.of('2x create:raw_zinc').withChance(0.2), Item.of('2x minecraft:lapis_lazuli').withChance(0.1)], 'kubejs:common_mineral_cluster').processingTime(100)
+	event.recipes.create.crushing([Item.of('2x minecraft:raw_iron'), Item.of('minecraft:raw_gold').withChance(0.2), Item.of('minecraft:raw_copper').withChance(0.2), Item.of('create:raw_zinc').withChance(0.2), Item.of('2x minecraft:lapis_lazuli').withChance(0.1)], 'kubejs:common_mineral_cluster').processingTime(100)
 
 	event.recipes.create.crushing([Item.of('3x kubejs:lime_powder'), Item.of('2x kubejs:lime_powder').withChance(0.3)], 'create:limestone').processingTime(100)
 
-	event.recipes.create.crushing([Item.of('2x iceandfire:silver_ingot'), Item.of('3x createoreexcavation:raw_redstone').withChance(0.3), Item.of('2x createoreexcavation:raw_emerald').withChance(0.2), Item.of('2x createoreexcavation:raw_diamond').withChance(0.1), Item.of('minecraft:netherite_scrap').withChance(0.08)], 'kubejs:rare_mineral_cluster').processingTime(100)
+	event.recipes.create.crushing([Item.of('2x iceandfire:silver_ingot'), Item.of('2x createoreexcavation:raw_redstone').withChance(0.3), Item.of('2x createoreexcavation:raw_emerald').withChance(0.2), Item.of('createoreexcavation:raw_diamond').withChance(0.1), Item.of('minecraft:netherite_scrap').withChance(0.08)], 'kubejs:rare_mineral_cluster').processingTime(100)
 
 	event.recipes.create.crushing([Item.of('2x minecraft:netherite_scrap'), Item.of('5x minecraft:blaze_powder').withChance(0.5), Item.of('5x create:powdered_obsidian').withChance(0.4), Item.of('5x minecraft:glowstone_dust').withChance(0.45), Item.of('8x minecraft:quartz').withChance(0.6), Item.of('kubejs:nether_star_shard')], 'minecraft:nether_star').processingTime(300)
 
@@ -329,4 +356,6 @@ ServerEvents.recipes(event => {
 	event.recipes.create.sandpaper_polishing('kubejs:polished_amber', 'unusualprehistory:amber_shard')
 
 	event.recipes.create.splashing(['9x iceandfire:silver_nugget', Item.of('minecraft:glowstone_dust').withChance(0.3)], 'create:crushed_raw_silver')
+
+	registerCustomRecipe(new RollingRecipe(Item.of('minecraft:tinted_glass'), Item.of('biomancy:vial').withCount(3)))
 })

@@ -29,7 +29,7 @@ const organPlayerKeyPressedOnlyStrategies = {
     'kubejs:illithids': function (event, organ) {
         let player = event.player
         let particle = Utils.particleOptions(`dust 1 0 0 1`)
-        let ray = player.rayTrace(32, true)
+        let ray = player.rayTrace(32, false)
         if (ray.entity && ray.entity.isLiving()) {
             ray.entity.potionEffects.add('goety:wild_rage', ray.entity.maxHealth > 100 ? 20 * 10 : 20 * 60)
             player.addItemCooldown('kubejs:illithids', 20 * 60)
@@ -61,8 +61,9 @@ const organPlayerKeyPressedOnlyStrategies = {
         updateWarpCount(event.player, count + 5)
     },
     'kubejs:warden_core': function (event, organ) {
+        /**@type {Internal.ServerPlayer} */
         let player = event.player
-        let ray = player.rayTrace(24, true)
+        let ray = player.rayTrace(24, false)
         let distance = ray.distance
         let damageSource = new DamageSource.sonicBoom(player)
         let vec3Nor = player.getLookAngle().normalize()
@@ -74,7 +75,7 @@ const organPlayerKeyPressedOnlyStrategies = {
             counter++
         }
         if (ray.block) {
-            distance = player.position().distanceTo(ray.block.pos)
+            distance = player.getPosition(1.0).distanceTo(ray.block.pos)
         }
         for (let i = 0; i < distance; i++) {
             let vec3 = vec3Nor.scale(i).add(player.getEyePosition())
@@ -121,9 +122,9 @@ const organPlayerKeyPressedOnlyStrategies = {
         if (typeMap.has('kubejs:resource')) {
             value = typeMap.get('kubejs:resource').length
         }
-        let consume = 30 + 20 * value
+        let consume = 30 + 10 * value
         if (count > consume) {
-            player.potionEffects.add('minecraft:speed', 20 * (value + 2), Math.min(8, Math.floor(value * 0.5)))
+            player.potionEffects.add('minecraft:speed', 20 * (value + 5), Math.min(8, Math.floor(value * 0.5)))
             updateResourceCount(player, count - consume)
             player.addItemCooldown('kubejs:jet_propeller', 20 * Math.max(15, 95 - value * 5))
         }
@@ -137,7 +138,7 @@ const organPlayerKeyPressedOnlyStrategies = {
         else {
             player.giveExperiencePoints(Math.floor(player.getMaxHealth() - 10))
         }
-        player.addItemCooldown('kubejs:wither_and_fall', 20 * 150)
+        player.addItemCooldown('kubejs:wither_and_fall', 20 * 90)
     },
     'kubejs:excited_appendix': function (event, organ) {
         let player = event.player
@@ -151,7 +152,7 @@ const organPlayerKeyPressedOnlyStrategies = {
         if (itemMap.has('minecraft:tnt')) {
             cooldown = cooldown + itemMap.get('minecraft:tnt').length * 10
         }
-        player.potionEffects.add('goety:explosive', Math.max(60, 20 * duration), Math.min(1, Math.floor(amplifier)), false, false)
+        player.potionEffects.add('goety:explosive', Math.max(60, 20 * duration), Math.max(Math.min(2, Math.floor(amplifier))), 0)
         player.addItemCooldown('kubejs:excited_appendix', Math.max(20 * 10, 20 * (120 - cooldown)))
     },
     'kubejs:blood_crystal': function (event, organ) {
@@ -159,9 +160,9 @@ const organPlayerKeyPressedOnlyStrategies = {
         let harmfulEffects = []
         let beneficialEffects = []
         player.potionEffects.active.forEach(ctx => {
-            if (!ctx.effect.isBeneficial()) {
+            if (ctx.effect.CC_IsHarmful()) {
                 harmfulEffects.push(ctx)
-            } else {
+            } else if ((ctx.effect.CC_IsBeneficial())) {
                 beneficialEffects.push(ctx)
             }
         })
@@ -252,7 +253,7 @@ const organPlayerKeyPressedOnlyStrategies = {
     'kubejs:enderiophage_heart': function (event, organ) {
         let player = event.player
         let particle = Utils.particleOptions(`dust 1 0 1 1`)
-        let ray = player.rayTrace(32, true)
+        let ray = player.rayTrace(32, false)
         if (ray.entity && ray.entity.isLiving()) {
             ray.entity.potionEffects.add('alexsmobs:ender_flu', 20 * 5, 0, false, false)
             player.addItemCooldown('kubejs:enderiophage_heart', 20 * 45)
@@ -270,7 +271,7 @@ const organPlayerKeyPressedOnlyStrategies = {
             return (0.5 - Math.random())
         })
         chestInstance.organScores.forEach((key, value) => {
-            chestInstance.organScores.put(key, new $Float(organScoresValue.pop() + 1.5))
+            chestInstance.organScores.put(key, new $Float(organScoresValue.pop() + 3))
         })
 
         event.server.scheduleInTicks(20 * 30, (callback) => {
@@ -291,11 +292,83 @@ const organPlayerKeyPressedOnlyStrategies = {
     },
     'kubejs:nether_star_shard': function (event, organ) {
         let player = event.player
-        let ray = player.rayTrace(32, true)
+        let ray = player.rayTrace(32, false)
         if (ray.entity && ray.entity.isLiving() && ray.entity.type == 'witherstormmod:wither_storm') {
+            /** @type {Internal.Entity} */
             let entity = ray.entity
-            entity.mergeNbt({ 'Phase': 5, 'ConsumedEntities': 30000000 })
-            player.addItemCooldown('kubejs:nether_star_shard', 20 * 45)
+            let curPhase = entity?.nbt.getInt('Phase')
+            switch (true) {
+                case curPhase < 5: {
+                    entity.mergeNbt({ 'Phase': curPhase + 1, 'ConsumedEntities': 30000000 })
+                    break
+                }
+                case curPhase >= 5:
+                    entity.mergeNbt({ 'Phase': 7, 'ConsumedEntities': 30000000 })
+                    break
+            }
+            player.addItemCooldown('kubejs:nether_star_shard', 20 * 10)
         }
-    }
-};
+    },
+    'kubejs:potoo_beak': function (event, organ) {
+        let player = event.player
+        let level = event.level
+        let block = player.block.offset(0, -1, 0)
+        if (!block) return
+        let beakConfig = potooBeakSoundMap[block.material.id]
+        if (beakConfig) {
+            level.playSound(null, player.getX(), player.getY(), player.getZ(), beakConfig.soundEvent, player.getSoundSource(), beakConfig.minimumVolume, beakConfig.pitch)
+            player.addItemCooldown('kubejs:potoo_beak', 20 * 1)
+        }
+    },
+    'kubejs:treasure_detector_feather': function (event, organ) {
+        let level = event.level
+        let player = event.player
+        let randomPosBlock = player.block.offset((0.5 - Math.random()) * 1000, (128 - Math.random() * 32) - player.block.y, (0.5 - Math.random()) * 1000)
+
+
+        let luck = Math.max(player.getLuck(), 0)
+        let table = 'minecraft:chests/stronghold/base'
+        let dimLootMap = treasureDetectorTableMap[String(level.dimension)]
+
+        if (dimLootMap) {
+            let keys = Object.keys(dimLootMap)
+            keys.forEach((a) => parseInt(a))
+            keys = keys.sort((a, b) => {
+                return a - b
+            })
+            for (let i = 1; i < keys.length; i++) {
+                if (i + 1 >= keys.length) {
+                    table = dimLootMap['-1']
+                    break
+                }
+                if (luck < parseInt(keys[i + 1]) && luck >= parseInt(keys[i])) {
+                    table = dimLootMap[keys[i]]
+                    break
+                }
+            }
+        } else {
+            player.tell({ "translate": "kubejs.msg.treasure_detector_feather.1" })
+            return
+        }
+
+        for (let i = 0; i < 16; i++) {
+            if (!randomPosBlock.blockState.isAir()) {
+                if (!randomPosBlock.offset(0, -1, 0).blockState.isAir()) {
+                    randomPosBlock = randomPosBlock.offset(0, -4, 0)
+                    break
+                }
+            }
+            randomPosBlock = randomPosBlock.offset(0, -4, 0)
+        }
+        let pos = randomPosBlock.getPos()
+        let mapItem = $MapItem.create(level, pos.x, pos.z, 1, true, true)
+        $MapItem.renderBiomePreviewMap(level, mapItem)
+        $MapItemSavedData.addTargetDecoration(mapItem, pos, "+", $MapDecorationType.RED_X)
+        mapItem = mapItem.withName({ "translate": "map.kubejs.lost_treasure" })
+        let placementState = $ModBlocks.CHEST.get().defaultBlockState();
+        level.setBlock(pos, placementState, 2)
+        $RandomizableContainerBlockEntity.setLootTable(level, level.getRandom(), pos, table)
+        player.give(mapItem)
+        player.addItemCooldown('kubejs:treasure_detector_feather', 20 * 600)
+    },
+}

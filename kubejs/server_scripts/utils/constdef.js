@@ -86,23 +86,47 @@ const worldOfBossTypeList = [
 ]
 
 
-const tumorAttriBute = [
-    { name: 'chestcavity:filtration', multi: 0.5, max: 5 },
+const tumorAttriButeByD8 = [
+    { name: 'chestcavity:filtration', multi: 0.5, max: 2.5 },
+    { name: 'chestcavity:breath_recovery', multi: 0.5, max: 2.5 },
+    { name: 'chestcavity:nutrition', multi: 0.5, max: 2.5 },
+    { name: 'chestcavity:nerves', multi: 1, max: 5 },
+    { name: 'chestcavity:strength', multi: 1, max: 5 },
+    { name: 'chestcavity:breath_capacity', multi: 0.5, max: 2.5 },
+    { name: 'chestcavity:detoxification', multi: 0.5, max: 2.5 },
+    { name: 'chestcavity:speed', multi: 0.5, max: 2.5 },
+    { name: 'chestcavity:endurance', multi: 0.5, max: 2.5 },
+    { name: 'chestcavity:defense', multi: 0.5, max: 2.5 },
+    { name: 'chestcavity:digestion', multi: 0.5, max: 2.5 },
+    { name: 'chestcavity:metabolism', multi: 0.5, max: 2.5 },
+    { name: 'chestcavity:fire_resistant', multi: 0.5, max: 2.5 },
+    { name: 'chestcavity:knockback_resistant', multi: 0.5, max: 2.5 },
+    { name: 'chestcavity:water_breath', multi: 0.5, max: 2.5 },
+]
+
+const tumorAttriButeByNeuron = [
+    { name: 'chestcavity:filtration', multi: 0.5, max: 3 },
     { name: 'chestcavity:breath_recovery', multi: 0.5, max: 3 },
     { name: 'chestcavity:nutrition', multi: 0.5, max: 3 },
-    { name: 'chestcavity:nerves', multi: 1, max: 5 },
+    { name: 'chestcavity:nerves', multi: 1, max: 6 },
     { name: 'chestcavity:strength', multi: 1, max: 6 },
     { name: 'chestcavity:breath_capacity', multi: 0.5, max: 3 },
     { name: 'chestcavity:detoxification', multi: 0.5, max: 3 },
-    { name: 'chestcavity:speed', multi: 0.5, max: 5 },
-    { name: 'chestcavity:endurance', multi: 0.5, max: 5 },
-    { name: 'chestcavity:defense', multi: 0.5, max: 5 },
+    { name: 'chestcavity:speed', multi: 0.5, max: 3 },
+    { name: 'chestcavity:endurance', multi: 0.5, max: 3 },
+    { name: 'chestcavity:defense', multi: 0.5, max: 3 },
     { name: 'chestcavity:digestion', multi: 0.5, max: 3 },
-    { name: 'chestcavity:metabolism', multi: 0.5, max: 5 },
+    { name: 'chestcavity:metabolism', multi: 0.5, max: 3 },
     { name: 'chestcavity:fire_resistant', multi: 0.5, max: 3 },
     { name: 'chestcavity:knockback_resistant', multi: 0.5, max: 3 },
     { name: 'chestcavity:water_breath', multi: 0.5, max: 3 },
+    { name: 'chestcavity:health', multi: 0.5, max: 3 },
 ]
+
+const potooBeakSoundMap = {
+    'metal': { soundEvent: 'kubejs:beak_metal', pitch: 1, minimumVolume: 0.5 },
+    'mangrove_roots': { soundEvent: 'kubejs:beak_mangrove_roots', pitch: 1, minimumVolume: 0.5 },
+}
 
 const difficultLevelDef = [
     { healthMulti: 1, attackMulti: 1, armorMulti: 1, toughnessMulti: 1 },
@@ -130,7 +154,6 @@ const curseEnchantList = [
     'cursery:curse_poison',
     'cursery:curse_steelfeet',
     'cursery:curse_heavy_enchant',
-    'cursery:curse_explosive',
     'cursery:curse_recoil',
     'cursery:curse_stubby',
     'cursery:curse_hurtful',
@@ -144,4 +167,74 @@ const curseEnchantList = [
     'minecraft:binding_curse',
 ]
 
-const trinketList = ['nameless_trinkets:reforger', 'nameless_trinkets:true_heart_of_the_sea', 'nameless_trinkets:dragons_eye', 'nameless_trinkets:spider_legs', 'nameless_trinkets:sleeping_pills', 'nameless_trinkets:moon_stone', 'nameless_trinkets:nelumbo', 'nameless_trinkets:dark_nelumbo', 'nameless_trinkets:super_magnet', 'nameless_trinkets:rage_mind', 'nameless_trinkets:puffer_fish_liver', 'nameless_trinkets:lucky_rock', 'nameless_trinkets:vampire_blood', 'nameless_trinkets:speed_force', 'nameless_trinkets:tick', 'nameless_trinkets:ghast_eye', 'nameless_trinkets:cracked_crown', 'nameless_trinkets:ethereal_wings', 'nameless_trinkets:blindfold', 'nameless_trinkets:ice_cube', 'nameless_trinkets:blaze_nucleus', 'nameless_trinkets:wooden_stick', 'nameless_trinkets:tear_of_the_sea', 'nameless_trinkets:gods_crown', 'nameless_trinkets:fertilizer', 'nameless_trinkets:sigil_of_baphomet', 'nameless_trinkets:gills', 'nameless_trinkets:amphibious_hands', 'nameless_trinkets:fragile_cloud', 'nameless_trinkets:light_gloves', 'nameless_trinkets:fate_emerald', 'nameless_trinkets:scarab_amulet', 'nameless_trinkets:pocket_lightning_rod', 'nameless_trinkets:fractured_nullstone', 'nameless_trinkets:electric_paddle', 'nameless_trinkets:reverse_card', 'nameless_trinkets:missing_page', 'nameless_trinkets:broken_magnet', 'nameless_trinkets:experience_magnet', 'nameless_trinkets:experience_battery', 'nameless_trinkets:what_magnet', 'nameless_trinkets:callus']
+const grudgeCurseEnchantList = [
+    'cursery:curse_electrified',
+    'cursery:curse_switchy',
+    'cursery:curse_illusion',
+    'cursery:curse_undead',
+    'cursery:curse_laddering',
+    'cursery:curse_hungryhealth',
+    'cursery:curse_slowness',
+    'cursery:curse_poison',
+    'cursery:curse_steelfeet',
+    'cursery:curse_heavy_enchant',
+    'cursery:curse_recoil',
+    'cursery:curse_stubby',
+    'cursery:curse_hurtful',
+    'cursery:curse_loose',
+    'cursery:curse_weakness',
+    'cursery:curse_hungry',
+    'cursery:curse_anvil',
+    'cursery:curse_blindness',
+    "chestcavity:malpractice",
+]
+
+const trinketList = ['nameless_trinkets:reforger', 'nameless_trinkets:true_heart_of_the_sea', 'nameless_trinkets:dragons_eye', 'nameless_trinkets:spider_legs', 'nameless_trinkets:sleeping_pills', 'nameless_trinkets:moon_stone', 'nameless_trinkets:nelumbo', 'nameless_trinkets:dark_nelumbo', 'nameless_trinkets:super_magnet', 'nameless_trinkets:rage_mind', 'nameless_trinkets:puffer_fish_liver', 'nameless_trinkets:lucky_rock', 'nameless_trinkets:vampire_blood', 'nameless_trinkets:speed_force', 'nameless_trinkets:tick', 'nameless_trinkets:ghast_eye', 'nameless_trinkets:cracked_crown', 'nameless_trinkets:ethereal_wings', 'nameless_trinkets:blindfold', 'nameless_trinkets:ice_cube', 'nameless_trinkets:blaze_nucleus', 'nameless_trinkets:wooden_stick', 'nameless_trinkets:tear_of_the_sea', 'nameless_trinkets:gods_crown', 'nameless_trinkets:fertilizer', 'nameless_trinkets:sigil_of_baphomet','nameless_trinkets:amphibious_hands', 'nameless_trinkets:fragile_cloud', 'nameless_trinkets:light_gloves', 'nameless_trinkets:fate_emerald', 'nameless_trinkets:scarab_amulet', 'nameless_trinkets:pocket_lightning_rod', 'nameless_trinkets:fractured_nullstone', 'nameless_trinkets:electric_paddle', 'nameless_trinkets:reverse_card', 'nameless_trinkets:missing_page', 'nameless_trinkets:broken_magnet', 'nameless_trinkets:experience_magnet', 'nameless_trinkets:experience_battery', 'nameless_trinkets:what_magnet', 'nameless_trinkets:callus']
+
+
+const coeVeinList = [
+    'createoreexcavation:drilling/coal',
+    'createoreexcavation:drilling/copper',
+    'createoreexcavation:drilling/diamond',
+    'createoreexcavation:drilling/emerald',
+    'createoreexcavation:drilling/glowstone',
+    'createoreexcavation:drilling/gold',
+    'createoreexcavation:drilling/hardened_diamond',
+    'createoreexcavation:drilling/iron',
+    'createoreexcavation:drilling/quartz',
+    'createoreexcavation:drilling/redstone',
+    'createoreexcavation:drilling/zinc',
+    'createoreexcavation:drilling/water',
+    'kubejs:drilling_arcane',
+    'kubejs:drilling_lapis',
+    'kubejs:drilling_nether_gold',
+    'kubejs:drilling_netherite',
+    'kubejs:drilling_silver',
+    'minecraft:extracting_lava_nether',
+    'minecraft:extracting_quicksilver',
+    'minecraft:extracting_lava_overworld'
+]
+
+const treasureDetectorTableMap = {
+    'minecraft:overworld': {
+        0: "minecraft:chests/stronghold/base",
+        5: "minecraft:chests/abandoned_mineshaft",
+        10: "minecraft:chests/desert_pyramid",
+        15: "minecraft:chests/buried_treasure",
+        20: "minecraft:chests/ancient_city",
+        25: "dungeons_arise:chests/aviary/aviary_treasure",
+        '-1': "dungeons_arise:chests/foundry/foundry_treasure"
+    },
+    'minecraft:the_nether': {
+        0: "minecraft:chests/nether_fortress/fort_inside_generic",
+        8: "minecraft:chests/bastion_bridge",
+        12: "minecraft:chests/bastion_treasure",
+        '-1': "dungeons_arise:chests/heavenly_challenger/heavenly_challenger_treasure"
+    },
+    'minecraft:the_end': {
+        0: "minecraft:chests/end_city_treasure",
+        '-1': "minecraft:chests/end_city_treasure"
+    }
+}
+
+const machineChestLootTable = ['kubejs:platelet_dispatcher', 'kubejs:lowlight_vision', 'kubejs:revolution_relay', 'kubejs:revolution_delay', 'kubejs:rose_quartz_muscle', 'kubejs:revolution_cable', 'kubejs:revolution_gear', 'kubejs:rose_quartz_dialyzer', 'kubejs:rose_quartz_liver', 'kubejs:rose_quartz_heart', 'kubejs:revolution_steam_engine', 'kubejs:lava_life_cycle_system', 'kubejs:energy_bottle_max', 'kubejs:aegis', 'kubejs:mace', 'kubejs:machine_clockwork', 'kubejs:tamagotchi', 'kubejs:jet_propeller', 'kubejs:platelet_dispatcher', 'kubejs:compressed_oxygen_implant']

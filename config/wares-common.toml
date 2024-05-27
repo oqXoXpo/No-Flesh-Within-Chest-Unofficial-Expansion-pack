@@ -36,7 +36,7 @@ WanderingTraderSellsAgreements = false
 		PackagerXpPerLevel = [0, 40, 110, 250, 500]
 		#Players can manually deliver a package if Packager is not currently working at table.
 		#Requires 'PackagerRequiredForDelivery'. Default: true
-		PlayerCanDeliverManually = false
+		PlayerCanDeliverManually = true
 		#Time modifier when delivering manually.
 		#Default: 3x
 		#Range: 1.0 ~ 999.0
@@ -56,4 +56,18 @@ WanderingTraderSellsAgreements = false
 	ChangeOwnerToLastPlayer = false
 	#Delivery Table advancements would be triggered on the closest player if owner is offline or table doesn't have one.
 	TriggerTableAdvancementOnNearestPlayer = true
+
+[Package]
+	#Breaking placed Package while sneaking will not unpack it, but will drop intact package as an item instead.
+	#Default: true
+	SneakPreventsUnpacking = true
+	#Package is placed as a block only when sneaking. Set to 'true' to restore old behavior.
+	#Default: false
+	PlacingRequiresSneak = false
+	#Dispensers can place Packages as blocks.
+	#Default: true
+	DispenserPlace = true
+	#Packages pushed by pistons will break and drop their contents.
+	#Default: true
+	BrokenByPistons = true
 

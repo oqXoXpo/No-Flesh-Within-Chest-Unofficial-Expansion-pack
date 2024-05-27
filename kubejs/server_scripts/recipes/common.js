@@ -9,13 +9,18 @@ ServerEvents.recipes(event => {
     event.remove({ output: 'goety:warped_wartful_egg' })
     event.remove({ output: 'gateways:gate_pearl' })
     event.remove({ output: 'cataclysm:meat_shredder' })
-
     event.remove({ output: 'extraarmor:copper_helmet' })
     event.remove({ output: 'extraarmor:copper_chestplate' })
     event.remove({ output: 'extraarmor:copper_leggings' })
     event.remove({ output: 'extraarmor:copper_boots' })
     event.remove({ output: 'extraarmor:blacksmith_hammer' })
     event.remove({ output: 'alexsmobs:transmutation_table' })
+    event.remove({ output: 'weaponmaster:workstation' })
+
+    event.shaped('weaponmaster:workstation', [
+        ['minecraft:lectern', 'minecraft:writable_book', 'minecraft:anvil'],
+        ['minecraft:smooth_stone', '#forge:storage_blocks', 'minecraft:smooth_stone'],
+    ])
 
     event.shaped(Item.of('extraarmor:copper_helmet', 1), [
         'LOL',
@@ -71,6 +76,12 @@ ServerEvents.recipes(event => {
         ['', 'alexsmobs:banana_slug_slime', ''],
         ['minecraft:phantom_membrane', 'createaddition:gold_wire', 'minecraft:phantom_membrane'],
         ['', 'alexsmobs:banana_slug_slime', '']
+    ])
+
+    event.shaped('kubejs:archivist_eyeglass', [
+        ['', '#forge:ingots/gold', ''],
+        ['createaddition:gold_wire', '#forge:glass_panes/colorless', '#forge:ingots/gold'],
+        ['createaddition:gold_wire', '', '']
     ])
 
     event.shaped('kubejs:silk_for_cutting', [
@@ -136,7 +147,9 @@ ServerEvents.recipes(event => {
     event.shapeless('kubejs:eye_of_fortress', ['minecraft:ender_pearl', 'minecraft:magma_cream'])
     event.shapeless('kubejs:mosquito_repellent', ['irons_spellbooks:magic_cloth', 'chestcavity:cooked_alien_organ_meat'])
 
-    event.shapeless('chestcavity:appendix', [Ingredient.of(['@chestcavity', '#kubejs:organ']), 'biomancy:healing_additive'])
+    event.shapeless('chestcavity:sausage_skin', ['#kubejs:intestine'])
+
+    event.shapeless(Item.of('chestcavity:appendix').withName(Text.gray({ "translate": "kubejs.recipe.tip.1" })), [Ingredient.of(['@chestcavity', '#kubejs:organ']), 'biomancy:healing_additive'])
         .modifyResult((grid, stack) => {
             for (let i = 0; i <= 9; i++) {
                 let organ = grid.get(i)
@@ -148,6 +161,7 @@ ServerEvents.recipes(event => {
         });
 
 
+    event.shapeless('kubejs:candy_bag', ['kubejs:candy', 'kubejs:ice_candy', 'kubejs:water_candy', 'kubejs:fire_candy', 'kubejs:wind_candy'])
 
     event.shapeless('kubejs:lost_paradise', ['kubejs:paradise_regained', 'kubejs:god_agreement'])
 
@@ -208,7 +222,7 @@ ServerEvents.recipes(event => {
     event.shaped('kubejs:prismarine_crown', [
         ['', 'iceandfire:siren_tear', ''],
         ['', 'kubejs:broken_prismarine_crown', ''],
-        ['', 'goety:soul_ruby', '']])
+        ['', 'witherstormmod:command_block_book', '']])
 
     event.shaped('kubejs:jet_propeller', [
         ['create:iron_sheet', '', 'create:iron_sheet'],
@@ -225,5 +239,7 @@ ServerEvents.recipes(event => {
         ['', 'minecraft:stick', ''],
         ['', 'minecraft:stick', '']])
 
-    event.shapeless('kubejs:safe_chest_opener', ['chestcavity:chest_opener', '#forge:dyes/cyan'])
+    event.shapeless('kubejs:advanced_chest_opener', ['#forge:dyes/cyan', 'chestcavity:chest_opener', '#forge:dyes/cyan'])
+
+    event.shapeless('kubejs:command_spell_book', ['witherstormmod:command_block_book', 'kubejs:disenchantment_book'])
 })

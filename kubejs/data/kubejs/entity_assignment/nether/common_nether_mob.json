@@ -3,11 +3,11 @@
   "entities": [
     "alexsmobs:dropbear",
     "alexsmobs:laviathan",
-    "alexsmobs:soul_vulture",
     "alexsmobs:stradpole",
     "alexsmobs:warped_mosco",
     "alexsmobs:warped_toad",
     "cataclysm:ignited_revenant",
+    "cataclysm:ignited_berserker",
     "bygonenether:piglin_prisoner",
     "bygonenether:piglin_hunter",
     "bygonenether:wex",
@@ -15,6 +15,7 @@
     "bygonenether:wraither",
     "bygonenether:corpor",
     "bygonenether:wither_skeleton_knight",
-    "bygonenether:wither_skeleton_horse"
+    "bygonenether:wither_skeleton_horse",
+    "goblintraders:vein_goblin_trader"
   ]
 }

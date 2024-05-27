@@ -4,7 +4,7 @@ ItemEvents.tooltip((tooltip) => {
     })
 
     tooltip.addAdvanced('kubejs:ceremonial_knife', (item, advanced, text) => {
-        addForTextLines(text, [[LEADING_SYMBOL, Text.gray({ "translate": "kubejs.tooltips.ceremonial_knife.1" })], [LEADING_SYMBOL, Text.gray({ "translate": "kubejs.tooltips.ceremonial_knife.2" }), Text.gold('10'), Text.gray({ "translate": "kubejs.tooltips.ceremonial_knife.3" })]], 1);
+        addForTextLines(text, [[LEADING_SYMBOL, Text.gray({ "translate": "kubejs.tooltips.ceremonial_knife.1" })], [LEADING_SYMBOL, Text.gray({ "translate": "kubejs.tooltips.ceremonial_knife.2" }), Text.gold('5'), Text.gray({ "translate": "kubejs.tooltips.ceremonial_knife.3" })]], 1);
     })
 
     tooltip.addAdvanced('biomancy:healing_additive', (item, advanced, text) => {
@@ -69,6 +69,7 @@ ItemEvents.tooltip((tooltip) => {
     })
     tooltip.addAdvanced('kubejs:unholy_grail', (item, advanced, text) => {
         text.add(Text.red({ "translate": "kubejs.tooltips.unholy_grail.1" }));
+        text.add(Text.darkGray({ "translate": "kubejs.tooltips.unholy_grail.2" }));
     })
     tooltip.addAdvanced('kubejs:dark_stardust_fragment', (item, advanced, text) => {
         text.add(Text.gray({ "translate": "kubejs.tooltips.dark_stardust_fragment.1" }));
@@ -82,8 +83,8 @@ ItemEvents.tooltip((tooltip) => {
         text.add(Text.gray({ "translate": "kubejs.tooltips.disenchantment_book.1" }));
         text.add(Text.gold({ "translate": "kubejs.tooltips.disenchantment_book.2" }));
     })
-    tooltip.addAdvanced('kubejs:safe_chest_opener', (item, advanced, text) => {
-        text.add(Text.gray({ "translate": "kubejs.tooltips.safe_chest_opener.1" }));
+    tooltip.addAdvanced('kubejs:advanced_chest_opener', (item, advanced, text) => {
+        text.add(Text.darkGray({ "translate": "kubejs.tooltips.advanced_chest_opener.1" }));
     })
     tooltip.addAdvanced('kubejs:god_bless_empty_necklace', (item, advanced, text) => {
         text.add(Text.gray({ "translate": "kubejs.tooltips.god_bless_empty_necklace.1" }));
@@ -155,7 +156,18 @@ ItemEvents.tooltip((tooltip) => {
     tooltip.addAdvanced('somebosses:power_generator_core', (item, advanced, text) => {
         text.add(Text.gray({ "translate": "kubejs.tooltips.power_generator_core.1" }));
     })
-    
+
+    tooltip.addAdvanced('kubejs:candy_bag', (item, advanced, text) => {
+        text.add(Text.darkGray({ "translate": "kubejs.tooltips.candy_bag.1" }));
+    })
+
+    tooltip.addAdvanced('art_of_forging:potent_mixture', (item, advanced, text) => {
+        text.add(Text.gray({ "translate": "kubejs.tooltips.potent_mixture.1" }));
+    })
+
+    tooltip.addAdvanced('witherstormmod:withered_nether_star', (item, advanced, text) => {
+        text.add(Text.darkGray({ "translate": "kubejs.tooltips.withered_nether_star.1" }));
+    })
 
     tooltip.addAdvanced('kubejs:organ_charm', (item, advanced, text) => {
         let lineNum = 1
@@ -179,8 +191,8 @@ ItemEvents.tooltip((tooltip) => {
                     blockList.push(Text.translate(Item.of(ctx).descriptionId).string)
                 })
             }
-            text.add(lineNum++,[Text.gold({ "translate": "kubejs.tooltips.organ_charm.12" }), Text.yellow(blockList.join('/'))])
-            
+            text.add(lineNum++, [Text.gold({ "translate": "kubejs.tooltips.organ_charm.12" }), Text.yellow(blockList.join('/'))])
+
             text.add(lineNum++, [Text.gray({ "translate": "kubejs.tooltips.organ_charm.13" }), Text.gray(`${item.nbt.miningTask.counter}/${item.nbt.miningTask.miningAmount}`), Text.gray({ "translate": "kubejs.tooltips.organ_charm.14" })]);
         }
         if (item.nbt?.type == 'damage') {

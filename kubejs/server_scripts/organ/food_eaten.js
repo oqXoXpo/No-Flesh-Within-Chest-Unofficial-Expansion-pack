@@ -3,11 +3,6 @@ ItemEvents.foodEaten(event => {
     let player = event.player;
     if (!player) return;
     let typeMap = getPlayerChestCavityTypeMap(player);
-    if (typeMap.has('kubejs:eat_effect')) {
-        typeMap.get('kubejs:eat_effect').forEach(organ => {
-            organFoodEatenStrategies[organ.id](event, organ)
-        })
-    }
     let onlySet = new Set()
     if (typeMap.has('kubejs:eat_effect_only')) {
         typeMap.get('kubejs:eat_effect_only').forEach(organ => {
@@ -15,6 +10,11 @@ ItemEvents.foodEaten(event => {
                 onlySet.add(organ.id)
                 organFoodEatenOnlyStrategies[organ.id](event, organ)
             }
+        })
+    }
+    if (typeMap.has('kubejs:eat_effect')) {
+        typeMap.get('kubejs:eat_effect').forEach(organ => {
+            organFoodEatenStrategies[organ.id](event, organ)
         })
     }
 })
@@ -43,17 +43,17 @@ const organFoodEatenOnlyStrategies = {
         event.player.addItemCooldown(event.item, 20 * 300)
         if (!event.player.hasEffect('kubejs:sweet_dream')) {
             event.player.potionEffects.add('kubejs:sweet_dream',
-                event.item.getFoodProperties(event.player).getNutrition() * 15 * 20, 0)
+                event.item.getFoodProperties(event.player).getNutrition() * 30 * 20, 0)
         }
     },
     'kubejs:cream_cookie_heart': function (event, organ) {
         if (event.item.id == 'kubejs:cream') {
-            event.player.potionEffects.add('minecraft:speed', 600 * 20, 1)
+            event.player.potionEffects.add('minecraft:speed', 1800 * 20, 1)
             event.player.removeEffect('minecraft:strength')
             return
         }
         if (event.item.hasTag('kubejs:is_cookie')) {
-            event.player.potionEffects.add('minecraft:strength', 600 * 20, 1)
+            event.player.potionEffects.add('minecraft:strength', 1800 * 20, 1)
             event.player.removeEffect('minecraft:speed')
             return
         }
@@ -67,9 +67,7 @@ const organFoodEatenOnlyStrategies = {
             player.potionEffects.add('minecraft:health_boost', 15 * 20, 2)
             player.potionEffects.add('minecraft:resistance', 90 * 20, 1)
             player.tell(Text.gray({ "translate": "kubejs.msg.tamagotchi.2" }))
-            if (Math.random() < 0.2) {
-                updateWarpCount(player, player.persistentData.getInt(warpCount) - 1)
-            }
+            updateWarpCount(player, player.persistentData.getInt(warpCount) - 1)
         }
     },
     'kubejs:ring_for_home': function (event, organ) {

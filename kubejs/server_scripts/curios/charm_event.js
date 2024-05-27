@@ -80,7 +80,7 @@ BlockEvents.broken(event => {
 
 /**
  * 承受伤害
- * @param {Internal.LivingHurtEvent} event 
+ * @param {Internal.LivingDamageEvent} event 
  * @param {EntityHurtCustomModel} data 
  * @returns 
  */
@@ -149,7 +149,7 @@ function organCharmEntityHurtByPlayer(event, data) {
 
 /**
  * 扭曲值任务
- * @param {Internal.Player} player 
+ * @param {Internal.ServerPlayer} player 
  * @param {Number} warpCount 
  */
 global.organCharmPlayerWarpTask = (player) => {

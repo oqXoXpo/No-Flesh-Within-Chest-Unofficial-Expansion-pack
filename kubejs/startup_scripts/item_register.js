@@ -4,7 +4,6 @@ StartupEvents.registry('item', event => {
     event.create('relic_metal_ingot').texture('kubejs:item/relic_metal_ingot')
     event.create('polished_amber').texture('kubejs:item/polished_amber')
     event.create('dreadsteel_ingot').texture('kubejs:item/dreadsteel_ingot')
-
     event.create('common_mineral_cluster').texture('kubejs:item/common_mineral_cluster')
     event.create('rare_mineral_cluster').texture('kubejs:item/rare_mineral_cluster')
     event.create('dark_stardust_fragment').texture('kubejs:item/dark_stardust_fragment')
@@ -17,22 +16,39 @@ StartupEvents.registry('item', event => {
     event.create('secret_of_rain').texture('kubejs:item/secret_of_rain').tag('kubejs:secret').maxStackSize(1)
     event.create('secret_of_heart').texture('kubejs:item/secret_of_heart').tag('kubejs:secret').maxStackSize(1)
     event.create('secret_of_bloom').texture('kubejs:item/secret_of_bloom').tag('kubejs:secret').maxStackSize(1)
+    event.create('secret_of_snow').texture('kubejs:item/secret_of_snow').tag('kubejs:secret').maxStackSize(1)
+    event.create('secret_of_void').texture('kubejs:item/secret_of_void').tag('kubejs:secret').maxStackSize(1)
     event.create('lime_powder').texture('kubejs:item/lime_powder')
-    event.create('empty_organ_charm').texture('kubejs:item/empty_organ_charm').maxStackSize(1).tag('curios:charm')
-    event.create('organ_charm').texture('kubejs:item/organ_charm').maxStackSize(1).tag('curios:charm')
-    event.create('bunny_hoppers').texture('kubejs:item/bunny_hoppers').maxStackSize(1).tag('curios:feet')
+
     event.create('god_bless_empty_necklace').texture('kubejs:item/god_bless_empty_necklace').maxStackSize(1).tag('curios:necklace').tag('itemborders:gold')
     event.create('god_bless_full_necklace').texture('kubejs:item/god_bless_full_necklace').maxStackSize(1).tag('curios:necklace').tag('itemborders:gold')
     event.create('god_consciousness').texture('kubejs:item/god_consciousness').maxStackSize(1).fireResistant()
     event.create('god_agreement').texture('kubejs:item/god_agreement').maxStackSize(1)
-    event.create('candy').texture('kubejs:item/candy').tag('extradelight:candy_bowl_valid').food(food => { food.hunger(1).saturation(1).alwaysEdible() }).tag('supplementaries:cookies')
-    event.create('ice_candy').texture('kubejs:item/ice_candy').tag('extradelight:candy_bowl_valid').food(food => { food.hunger(1).saturation(1).alwaysEdible() }).tag('supplementaries:cookies')
-    event.create('water_candy').texture('kubejs:item/water_candy').tag('extradelight:candy_bowl_valid').food(food => { food.hunger(1).saturation(1).alwaysEdible() }).tag('supplementaries:cookies')
-    event.create('fire_candy').texture('kubejs:item/fire_candy').tag('extradelight:candy_bowl_valid').food(food => { food.hunger(1).saturation(1).alwaysEdible() }).tag('supplementaries:cookies')
-    event.create('wind_candy').texture('kubejs:item/wind_candy').tag('extradelight:candy_bowl_valid').food(food => { food.hunger(1).saturation(1).alwaysEdible() }).tag('supplementaries:cookies')
+    event.create('candy').texture('kubejs:item/candy').tag('extradelight:candy_bowl_valid').food(food => { food.hunger(1).saturation(1).alwaysEdible().effect('kubejs:sweet_dream', 20 * 5, 0, 1) }).tag('supplementaries:cookies')
+    event.create('ice_candy').texture('kubejs:item/ice_candy').tag('extradelight:candy_bowl_valid').food(food => { food.hunger(1).saturation(1).alwaysEdible().effect('kubejs:sweet_dream', 20 * 5, 0, 1) }).tag('supplementaries:cookies')
+    event.create('water_candy').texture('kubejs:item/water_candy').tag('extradelight:candy_bowl_valid').food(food => { food.hunger(1).saturation(1).alwaysEdible().effect('kubejs:sweet_dream', 20 * 5, 0, 1) }).tag('supplementaries:cookies')
+    event.create('fire_candy').texture('kubejs:item/fire_candy').tag('extradelight:candy_bowl_valid').food(food => { food.hunger(1).saturation(1).alwaysEdible().effect('kubejs:sweet_dream', 20 * 5, 0, 1) }).tag('supplementaries:cookies')
+    event.create('wind_candy').texture('kubejs:item/wind_candy').tag('extradelight:candy_bowl_valid').food(food => { food.hunger(1).saturation(1).alwaysEdible().effect('kubejs:sweet_dream', 20 * 5, 0, 1) }).tag('supplementaries:cookies')
+    event.create('candy_bag').texture('kubejs:item/candy_bag')
+
     event.create('starch_sausage').texture('kubejs:item/starch_sausage').food(food => { food.hunger(3).saturation(0.8).alwaysEdible() })
     event.create('cream').texture('kubejs:item/cream').food(food => { food.hunger(1).saturation(1).alwaysEdible() }).tag('supplementaries:cookies')
-    event.create('mr_and_mrs_smith').texture('kubejs:item/mr_and_mrs_smith').food(food => { food.hunger(4).saturation(1).alwaysEdible(); food.effect('minecraft:regeneration', 20 * 30, 1, 1) })
+    event.create('mr_and_mrs_smith').texture('kubejs:item/mr_and_mrs_smith').food(food => {
+        food.hunger(4).saturation(1).alwaysEdible()
+        food.effect('minecraft:regeneration', 20 * 30, 1, 1)
+    })
+    event.create('brown_sauce_braised_intestines').texture('kubejs:item/brown_sauce_braised_intestines').food(food => {
+        food.hunger(6).saturation(1.5).alwaysEdible()
+        food.effect('minecraft:regeneration', 20 * 45, 0, 1)
+        food.effect('minecraft:speed', 20 * 45, 0, 1)
+        food.effect('minecraft:resistance', 20 * 45, 0, 1)
+        food.effect('minecraft:absorption', 20 * 45, 0, 1)
+        food.effect('minecraft:strength', 20 * 45, 0, 1)
+        food.effect('minecraft:jump_boost', 20 * 45, 0, 1)
+        food.effect('fruitsdelight:rage_aura', 20 * 45, 0, 1)
+        food.effect('fruitsdelight:appetizing', 20 * 45, 0, 1)
+        food.effect('minecraft:nausea', 20 * 45, 0, 1)
+    })
     event.create('kubejs:sponsor_badge').texture('kubejs:item/sponsor_badge').maxStackSize(1)
     event.create('kubejs:mysterious_trinket').texture('kubejs:item/mysterious_trinket').maxStackSize(64)
     event.create('kubejs:chicken_flavor_powder').texture('kubejs:item/chicken_flavor_powder').maxStackSize(64)
@@ -65,8 +81,9 @@ StartupEvents.registry('item', event => {
 
     event.create('lucky_cookie').texture('kubejs:item/organs/food/lucky_cookie').food(food => {
         food.hunger(1).saturation(1).alwaysEdible().eaten(event => {
+            if (!event.player) return
             event.server.runCommandSilent(`/title ${event.player.name.getString()} title {"text":"${randomGet(luckyCookieSentence)}"}`)
-            if (Math.random() < 0.01) {
+            if (Math.random() < 0.02) {
                 event.player.give(Item.of('kubejs:lucky_cookie_organ'))
             }
         })
@@ -80,7 +97,7 @@ StartupEvents.registry('item', event => {
         })
         .finishUsing((itemstack, level, entity) => {
             if (level.isClientSide()) return itemstack
-            entity.attack(10);
+            entity.attack(5);
             entity.potionEffects.add('irons_spellbooks:instant_mana', 1, 2)
             entity.addItemCooldown(itemstack, 20 * 15)
             return itemstack;
@@ -117,7 +134,7 @@ StartupEvents.registry('item', event => {
             return itemstack;
         })
 
-    event.create('candy_canes_wand').texture('kubejs:item/candy_canes_wand')
+    event.create('candy_canes_wand', 'basic').texture('kubejs:item/candy_canes_wand')
         .maxStackSize(1)
         .modifyAttribute('irons_spellbooks:spell_power', 'kubejsSpellPowerWeaponBoost', 0.1, 'addition')
         .rarity('epic')
@@ -134,7 +151,13 @@ StartupEvents.registry('item', event => {
             return itemstack;
         })
 
-    event.create('rapier_wand', 'sword').tier('diamond').attackDamageBaseline(4.0).attackDamageBonus(2.5).speedBaseline(-1.5).speed(6.5).maxDamage(980).maxStackSize(1)
+    event.create('rapier_wand', 'irons_spells_js:magic_sword').tier('diamond')
+        .attackDamageBaseline(4.0)
+        .attackDamageBonus(3.5)
+        .speedBaseline(-1.5)
+        .speed(6.5)
+        .maxDamage(980)
+        .maxStackSize(1)
         .modifyAttribute('irons_spellbooks:spell_power', 'kubejsSpellPowerWeaponBoost', 0.1, 'addition')
         .rarity('epic')
         .useAnimation('bow')
@@ -149,7 +172,14 @@ StartupEvents.registry('item', event => {
             return itemstack;
         })
 
-    event.create('artist_wand', 'sword').tier('diamond').attackDamageBaseline(2.0).attackDamageBonus(3.0).speedBaseline(-3.0).speed(4.0).maxDamage(1680).maxStackSize(1)
+    event.create('artist_wand', 'irons_spells_js:magic_sword')
+        .tier('diamond')
+        .attackDamageBaseline(2.0)
+        .attackDamageBonus(3.0)
+        .speedBaseline(-2.5)
+        .speed(4.0)
+        .maxDamage(1680)
+        .maxStackSize(1)
         .rarity('epic')
         .useAnimation('bow')
         .use((level, player, hand) => {
@@ -158,13 +188,20 @@ StartupEvents.registry('item', event => {
         .useDuration(itemStack => 20)
         .finishUsing((itemstack, level, entity) => {
             if (level.isClientSide()) return itemstack
-            entity.potionEffects.add('kubejs:colorful', 20 * 10, 0)
+            entity.potionEffects.add('kubejs:colorful', 20 * 20, 0)
             entity.addItemCooldown(itemstack, 20 * 60)
             return itemstack;
         })
 
-    event.create('glass_wand').texture('kubejs:item/glass_wand')
+
+    event.create('glass_wand', 'irons_spells_js:staff').texture('kubejs:item/glass_wand')
+        .tier('diamond')
         .maxStackSize(1)
+        .attackDamageBaseline(3.0)
+        .attackDamageBonus(1.5)
+        .speedBaseline(-2.5)
+        .speed(4.0)
+        .maxDamage(123)
         .rarity('rare')
 
 
@@ -209,7 +246,7 @@ StartupEvents.registry('item', event => {
         .finishUsing((itemstack, level, entity) => {
             if (level.isClientSide()) return itemstack
             let nbt = { organSocres: {} }
-            let ray = entity.rayTrace(4, true)
+            let ray = entity.rayTrace(4, false)
             let target = entity
             if (ray.entity && ray.entity.isLiving()) {
                 target = ray.entity
@@ -247,7 +284,7 @@ StartupEvents.registry('item', event => {
         .useDuration(itemStack => 20)
         .finishUsing((itemstack, level, entity) => {
             if (level.isClientSide()) return itemstack
-            entity.runCommandSilent(`/lichdom revoke ${entity.name.getString()}`)
+            entity.server.runCommandSilent(`/lichdom revoke ${entity.name.getString()}`)
             return;
         })
 
@@ -273,7 +310,6 @@ StartupEvents.registry('item', event => {
                 } else {
                     itemstack.setNbt({ inventory: oriInv })
                 }
-
             }
             global.initChestCavityIntoMap(entity, true)
             if (entity.getChestCavityInstance().inventory.hasAnyMatching(item => {
@@ -286,7 +322,27 @@ StartupEvents.registry('item', event => {
             return itemstack
         })
 
-    event.create('safe_chest_opener').texture('kubejs:item/safe_chest_opener')
+    event.create('advanced_chest_opener').texture('kubejs:item/advanced_chest_opener')
         .maxStackSize(1)
-})
 
+    event.create('random_delivery_agreement').texture('kubejs:item/random_delivery_agreement')
+        .maxStackSize(16)
+        .useAnimation('bow')
+        .use((level, player, hand) => {
+            return true;
+        })
+        .useDuration(itemStack => 20)
+        .finishUsing((itemstack, level, entity) => {
+            if (level.isClientSide()) return itemstack
+            if (!entity.isPlayer()) return itemstack
+            let wares = global.getRandomWare()
+            itemstack.shrink(1)
+            entity.give(wares)
+            return itemstack
+        })
+
+    event.create('command_spell_book', 'irons_spells_js:spellbook')
+        .setMaxSpellSlots(15)
+        .addDefaultSpell('kubejs:earth_without_earth', 1)
+        .addDefaultAttribute('irons_spellbooks:spell_power', 'commandBookSpellPower', 0.5, 'addition')
+})

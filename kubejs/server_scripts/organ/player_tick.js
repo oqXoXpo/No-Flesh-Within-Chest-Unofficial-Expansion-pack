@@ -3,11 +3,6 @@ PlayerEvents.tick(event => {
     let player = event.player
     if (player.age % 20 != 0) return
     let typeMap = getPlayerChestCavityTypeMap(player);
-    if (typeMap.has('kubejs:player_tick')) {
-        typeMap.get('kubejs:player_tick').forEach(organ => {
-            organPlayerTickStrategies[organ.id](event, organ)
-        })
-    }
     let onlySet = new Set()
     if (typeMap.has('kubejs:player_tick_only')) {
         typeMap.get('kubejs:player_tick_only').forEach(organ => {
@@ -15,6 +10,11 @@ PlayerEvents.tick(event => {
                 onlySet.add(organ.id)
                 organPlayerTickOnlyStrategies[organ.id](event, organ)
             }
+        })
+    }
+    if (typeMap.has('kubejs:player_tick')) {
+        typeMap.get('kubejs:player_tick').forEach(organ => {
+            organPlayerTickStrategies[organ.id](event, organ)
         })
     }
 })
@@ -42,7 +42,7 @@ const organPlayerTickStrategies = {
         }
         let player = event.player
         let criticalPunchCount = player.persistentData.getInt(criticalPunch)
-        if (criticalPunchCount >= criticalPunchMaxCount) return
+        if (criticalPunchCount >= 50) return
         player.persistentData.putInt(criticalPunch, criticalPunchCount + 1)
     },
     'kubejs:egg_of_straddler': function (event, organ) {
@@ -55,6 +55,7 @@ const organPlayerTickStrategies = {
         let targetEntity = null
 
         let stradpoleEntity = event.level.createEntity('alexsmobs:stradpole')
+
         stradpoleEntity.setPosition(player.x, player.y + 1, player.z)
 
         let area = new AABB.of(player.x - radius, player.y - radius, player.z - radius, player.x + radius, player.y + radius, player.z + radius)
@@ -68,12 +69,17 @@ const organPlayerTickStrategies = {
                 nearDistance = distance
             }
         })
-        
+
         if (targetEntity == null) return
         let distance = player.distanceToEntity(targetEntity)
         let amplifier = distance * (0.9 + 0.6 * Math.random()) * 0.05
         stradpoleEntity.addMotion(amplifier * (targetEntity.x - player.x), amplifier * (targetEntity.y - player.y), amplifier * (targetEntity.z - player.z))
         stradpoleEntity.spawn()
+        event.server.scheduleInTicks(20 * 30, ctx => {
+            if (stradpoleEntity) {
+                stradpoleEntity.remove('discarded')
+            }
+        })
     },
 };
 
@@ -124,11 +130,11 @@ const organPlayerTickOnlyStrategies = {
         let player = event.player
         let maxHealth = player.getMaxHealth()
         let health = player.getHealth()
-        if (health < maxHealth * 0.2) {
+        if (health < maxHealth * 0.1) {
             player.potionEffects.add('kubejs:vampiric', 20 * 3, 2)
-        } else if (health < maxHealth * 0.3) {
+        } else if (health < maxHealth * 0.2) {
             player.potionEffects.add('kubejs:vampiric', 20 * 3, 1)
-        } else if (health < maxHealth * 0.5) {
+        } else if (health < maxHealth * 0.3) {
             player.potionEffects.add('kubejs:vampiric', 20 * 3, 0)
         }
     },
@@ -147,16 +153,13 @@ const organPlayerTickOnlyStrategies = {
         let player = event.player
         if (player.age % 600 != 0) return
         if (player.nbt?.ForgeCaps['goety:lichdom']?.lichdom == 1) return
-        let warp = player.persistentData.getInt(warpCount)
-        if (warp < 20) return
         let instance = player.getChestCavityInstance()
         // 如果该位置存在物品，则不进行生成
         let randomIndex = Math.floor(Math.random() * 27 + 1)
         if (instance.inventory.getItem(randomIndex) != 'minecraft:air') return
-
         let typeMap = getPlayerChestCavityTypeMap(player)
+        let itemMap = getPlayerChestCavityItemMap(player)
         if (!typeMap.has('kubejs:organ')) return
-
         let organCount = typeMap.get('kubejs:organ').length * 1
         // 扭曲鱼缸不计算器官数量
         let subCount = getFishInWarpSubCount(itemMap, typeMap)
@@ -164,7 +167,7 @@ const organPlayerTickOnlyStrategies = {
         let tumor = Item.of('kubejs:random_tumor', { organData: {} })
         let amount = Math.floor(Math.random() * 2 + 1)
         for (let i = 0; i < amount; i++) {
-            let attri = randomGet(tumorAttriBute)
+            let attri = randomGet(tumorAttriButeByNeuron)
             let attriName = attri.name
             // 扩散系数，用于控制属性的扩散范围(-0.5, 1.5)
             let diffusivity = Math.random() + Math.random() - 0.5
@@ -179,12 +182,26 @@ const organPlayerTickOnlyStrategies = {
             tumor.nbt.organData.put(attriName, attriValue)
         }
         instance.inventory.setItem(randomIndex, tumor)
-        player.potionEffects.add('minecraft:hunger', 5, 4)
+        player.potionEffects.add('minecraft:hunger', 5 * 20, 4)
         global.initChestCavityIntoMap(player, false)
         if (player.persistentData.contains(organActive) &&
             player.persistentData.getInt(organActive) == 1) {
             global.updatePlayerActiveStatus(player)
         }
     },
-
+    'kubejs:is_rabbit': function (event, organ) {
+        let player = event.player
+        if (player.age % 1200 != 0) return
+        $SEHelper.setRestPeriod(player, 4800)
+    },
+    'kubejs:revolution_bell': function (event, organ) {
+        let player = event.player
+        let itemMap = getPlayerChestCavityItemMap(player)
+        if (!itemMap.has('kubejs:revolution_steam_engine')) return
+        if (!player.hasEffect('kubejs:burning_heart')) return
+        let effect = player.getEffect('kubejs:burning_heart')
+        if (effect.getDuration() > 20 * 5 || effect.getDuration() < 20 * 4) return
+        revolSteamEngine(player)
+        player.addItemCooldown(Item.of('minecraft:potion'), 20 * 20)
+    },
 };
