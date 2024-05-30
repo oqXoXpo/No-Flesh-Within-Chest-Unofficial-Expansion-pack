@@ -11,12 +11,12 @@ const moorganPlayerKeyPressedOnlyStrategies = {
         let player = event.player
         let main = player.mainHandItem
         let off = player.offHandItem
-        if (main != 'modlc:engine' && off != 'modlc:engine') return
-        let handItem = main == 'modlc:engine' ? 'main_hand' : 'off_hand'
+        if (main != 'tetra:thermal_cell' && off != 'tetra:thermal_cell') return
+        let handItem = main == 'tetra:thermal_cell' ? 'main_hand' : 'off_hand'
         let damage = player.getHeldItem(handItem).getDamageValue()
         let maxDamage = player.getHeldItem(handItem).getMaxDamage()
         if (damage >= maxDamage) {
-            return player.setStatusMessage([Text.gold({ "translate": "modlc.msg.mechanical_core.1" })])
+            return player.setStatusMessage([Text.golEd({ "translate": "modlc.msg.mechanical_core.1" })])
         }
         let itemMap = getPlayerChestCavityItemMap(player)
         let lossDamage = itemMap.get('modlc:mechanical_core').length * 1
