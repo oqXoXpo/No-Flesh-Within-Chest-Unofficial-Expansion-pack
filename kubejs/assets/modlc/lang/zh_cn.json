@@ -11,6 +11,11 @@
 
     "modlc.tooltips.sunny_dolls.1": "象征着§b晴天§7和§9雨天§7的娃娃",
     "modlc.tooltips.sunny_dolls.2": "手持§e向日葵§7右键，把天气变成§b晴天",
-    "modlc.tooltips.sunny_dolls.3": "手持§b兰花§7右键，把天气变成§9雨天§7，冷却60s"
+    "modlc.tooltips.sunny_dolls.3": "手持§b兰花§7右键，把天气变成§9雨天§7，冷却60s",
+
+    "tetra.material.leviathan_rib": "利维亚桑的肋骨",
+    "tetra.material.leviathan_rib.prefix": "利维亚桑的肋骨",
+    "tetra.material.muscle": "肌肉",
+    "tetra.material.muscle.prefix": "肌肉"
 
 }
