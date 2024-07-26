@@ -13,9 +13,22 @@
     "modlc.tooltips.sunny_dolls.2": "手持§e向日葵§7右键，把天气变成§b晴天",
     "modlc.tooltips.sunny_dolls.3": "手持§b兰花§7右键，把天气变成§9雨天§7，冷却60s",
 
-    "tetra.material.leviathan_rib": "利维亚桑的肋骨",
-    "tetra.material.leviathan_rib.prefix": "利维亚桑的肋骨",
-    "tetra.material.muscle": "肌肉",
-    "tetra.material.muscle.prefix": "肌肉"
+    "tetra.variant_category.drill.label": "钻头",
+    "tetra.synergy.powered_drill": "§e动力手钻§r",
+    "tetra.material.drill": "铁钻头",
+    "tetra.material.drill.prefix": "铁",
+    "tetra.material.diamond_drill": "钻石钻头",
+    "tetra.material.diamond_drill.prefix": "钻石",
+    "tetra.material.netherite_drill": "下界合金钻头",
+    "tetra.material.netherite_drill.prefix": "下界合金",
+    "tetra.module.single/drill.item_name": "手钻",
+    "tetra.module.single/drill.material_name": "%s",
+    "tetra.module.single/drill.name": "手钻",
+    "tetra.module.single/drill.prefix": "%s",
+    "tetra/schematic/single/head/drill/drill.description": "安装特定的钻头，用于进行挖掘工作。\n\n基于提供钻头的材料等级。",
+    "tetra.module.single/drill.description": "在手钻的插槽处镶嵌红石块可为工具充能，增强手钻的挖掘效果。",
+    "tetra/schematic/single/head/drill/drill.name": "钻头",
+    "tetra/schematic/single/head/drill/drill.slot1": "钻头部件"
+
 
 }

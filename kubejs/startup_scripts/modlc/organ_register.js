@@ -26,7 +26,7 @@ StartupEvents.registry('item', event => {
         .addTextLines('alt', [LEADING_SYMBOL, Text.gray({ "translate": "modlc.tooltips.sunny_dolls.2" })])
         .addTextLines('alt', [LEADING_SYMBOL, Text.gray({ "translate": "modlc.tooltips.sunny_dolls.3" })])
         .build())
-        .texture('modlc:item/organs/weather/sunny_dolls')
+        .texture('modlc:items/organs/weather/sunny_dolls')
         .tag('itemborders:green')
         .tag('kubejs:rclick_only')
         .tag('kubejs:fantasy');
@@ -37,7 +37,7 @@ StartupEvents.registry('item', event => {
         .addScore('strength', -2)
         .addScore('speed', -1)
         .build())
-        .texture('modlc:item/organs/machine/mechanical_core')
+        .texture('modlc:items/organs/machine/mechanical_core')
         .tag('kubejs:heart')
         .tag('itemborders:iron')
         .tag('kubejs:key_pressed')
